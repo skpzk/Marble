@@ -19,11 +19,11 @@ void Mixer::output(void* outputBuffer, int framesPerBuffer, bool Stereo){
 		}
 	}
 }
-
+/*
 void Mixer::addInput(Osc* input){
 	this->numInputs++;
 	this->inputs.addElement(input);
-}
+}*/
 void Mixer::addInput(Va* input){
 	this->numInputs++;
 	this->inputs.addElement(input);

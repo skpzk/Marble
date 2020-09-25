@@ -29,7 +29,7 @@ class Wave{
       }
     };
   private:
-    sample_t maxValue = 1<<14;
+    sample_t maxValue = MAX;
     void sine();
     void tri();
     void square();

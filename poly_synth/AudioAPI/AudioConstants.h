@@ -8,6 +8,7 @@
 #define SAMPLE_RATE   (44100)
 #define TABLE_SIZE    (1600)
 #define FRAMES_PER_BUFFER (256)
+#define VOICES (8)
 
 /*#define TEST_UNSIGNED (0)
 

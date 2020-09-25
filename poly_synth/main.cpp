@@ -9,7 +9,7 @@
 
 #include "AudioLib/Voices.h"
 
-#include <pthread.h> //multithreading
+//#include <pthread.h> //multithreading
 #include "Utils/wait.h" //used to wait for X time intervals. (sleep_for is defined here)
 
 using namespace std;
@@ -29,7 +29,7 @@ int main(){
 	
 	printf("test\n");
 
-	Voices voices(8);
+	Voices voices(VOICES);
 
 	Midi midi(&voices);
 	midi.open(-1);

@@ -58,7 +58,7 @@ int Midi::open(int portNumber){
 		
 		if(portNumber < 0){
 			// Call function to select port.
-			if ( chooseMidiPort() ) this->close();
+			if ( !this->chooseMidiPort() ) this->close();
 		}else{
 			try{
 				midiin->openPort( portNumber );

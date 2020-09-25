@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <pthread.h>
+//#include <pthread.h>
 #include "portaudio.h"
 #include "MidiUtils.h"
 
