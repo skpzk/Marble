@@ -32,7 +32,7 @@ int main(){
 	Voices voices(8);
 
 	Midi midi(&voices);
-	midi.open(1);
+	midi.open(-1);
 
 	Audio audio;
 	printf("voices.mixer.test = %d\n", voices.mixer.test);
