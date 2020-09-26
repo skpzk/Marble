@@ -20,7 +20,6 @@ class Midi{
 		Midi(Voices* voices){
 			this->voices = voices;
 		}
-		//void mycallback( double deltatime, std::vector< unsigned char > *message, void *);
 	private:
 		Voices* voices;
 		RtMidiIn *midiin;

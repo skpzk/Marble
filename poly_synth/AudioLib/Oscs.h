@@ -14,10 +14,7 @@ class Osc{
 		void updatePhaseIncrement();
 		Wave wave = Wave(2);
 
-		//void writeWave(sample_t*);
-
 	public:
-				
 		void setVolume(float);
 		void setFreq(float);
 		float getNote();

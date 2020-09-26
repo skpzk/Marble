@@ -8,7 +8,6 @@
 class Note {
   public :
 
-    //all are called by voices :
     int note;  
     int order;
     float amp;
@@ -31,8 +30,6 @@ class Note {
   private:
     Osc *osc;
     Env env;
-    
-
 };
 
 #endif

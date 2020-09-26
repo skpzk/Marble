@@ -9,7 +9,6 @@ class Mixer{
 	public:
 		//void addInput(Osc*);
 		void addInput(Va*);
-		void removeInput(); //not implemented
 		void output(void*, int, bool);
 		int test = 17;
 	private:

@@ -5,20 +5,13 @@
 
 #include <stdio.h>
 #include <math.h>
-//#include <pthread.h>
 #include "portaudio.h"
-#include "MidiUtils.h"
 
 #include "../AudioLib/Mixer.h"
 
 typedef struct{
-    sample_t sine[TABLE_SIZE];
-    float left_phase;
-    float right_phase;
-    unsigned int framesToGo;
-    float midiNote = 60;
 	Mixer* mixer;
-}paTestData;
+}paData;
 
 int patestCallback( const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
@@ -29,24 +22,20 @@ int patestCallback( const void *inputBuffer, void *outputBuffer,
 
 class Audio{
 	public:
-		void setVolume(int);
-		static void* run(void*);
-		static void* test(void*);
 		int start();
 		int stop();
-		int getVolume();
-		paTestData          data;
+
+		paData          data;
 		void addInputFromMixer(Mixer*);
 	private:
 		PaStream*           stream;
 		PaStreamParameters  outputParameters;
-		PaError             err;
-		
-		PaTime              streamOpened;
+		PaError             err;		
 		
 		PaError startStream();
 		PaError stopStream();
-		int volume = 1;
+		PaError error();
+
 		bool running;	
 };
 

@@ -11,15 +11,6 @@
 #include <cstdlib>
 
 #include "Midi.h"
-#include "../Utils/wait.h"
-
-void usage( void ) {
-  // Error function in case of incorrect command-line
-  // argument specifications.
-  std::cout << "\nuseage: cmidiin <port>\n";
-  std::cout << "    where port = the device to use (first / default = 0).\n\n";
-  exit( 0 );
-}
 
 void printMidiMessage(double deltatime, std::vector< unsigned char > *message){
   unsigned int nBytes = message->size();
@@ -34,11 +25,11 @@ void mycallback( double deltatime, std::vector< unsigned char > *message, void *
 {
   Voices* voices = (Voices*) userData;
   //printMidiMessage(deltatime, message);
-  if((int) message->at(0) == 144){
+  if((int) message->at(0) == 144 && (int) message->at(2) != 0){
     std::cout << "Note On " << (int)message->at(1) << std::endl;
     voices->on((int)message->at(1));
   }
-  if((int) message->at(0) == 128){
+  if((int) message->at(0) == 128 || (int) message->at(2) == 0){
     std::cout << "Note Off " << (int)message->at(1) << std::endl;
     voices->off((int)message->at(1));
   }
@@ -125,17 +116,12 @@ bool Midi::chooseMidiPort()
     std::getline( std::cin, keyHit );  // used to clear out stdin
   }
 
-  this->midiin->openPort( i );
-
+  
+  try{
+    this->midiin->openPort( i );
+	}catch ( RtMidiError &error ) {
+    error.printMessage();
+    this->close();
+  }
   return true;
 }
-
-/*
-int main(){
-	printf("Test Midi\n");
-	Midi midiin;
-	midiin.open(1);
-	
-	sleep_for(1s);
-	midiin.close();
-}*/

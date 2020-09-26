@@ -7,14 +7,11 @@
 
 class AudioCollection{
 	public:
-		//int addElement(Osc*);
 		int addElement(Va*);
 		int removeElement(void*);
-		//void listElements();
 		void output(void*, bool);
 		int numOfElements=0;
 	private:
-		//Osc** oscs;
 		Va* vas[VOICES];
 		int numOfOscs = 0;
 		int numOfVas = 0;

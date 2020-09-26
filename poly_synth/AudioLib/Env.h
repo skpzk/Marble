@@ -23,7 +23,6 @@ class Env{
         sample_t t[FRAMES_PER_BUFFER];
         sample_t env[FRAMES_PER_BUFFER];
         sample_t lastValue;
-        int state;
 
         sample_t computeAttack();
         sample_t computeDecay();

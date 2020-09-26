@@ -75,12 +75,6 @@ void Voices::update_status(){//on détecte les enveloppes inactives, on enlève 
   }
 }
 
-// void Voices::connectToMixer(AudioMixerP* MixerP){
-//   for(int i = 0; i< this->total_voices ; i++){
-//     this->cords[i] = new AudioConnection(this->notes[i]->out, 0, *MixerP->Mixer, i);
-//   }
-// }
-////////// Midi CC //////////
 void Voices::setWaveform(int w){
   /* 0 : WAVEFORM_SINE
    * 1 : WAVEFORM_SAWTOOTH
@@ -99,7 +93,6 @@ void Voices::setWaveform(int w){
 void Voices::setAmplitude(float f){
   if((f>=0)&&(f<=2)){
     for(int i=0; i<this->total_voices; i++){
-      //this->notes[i]->out.gain(f); //is it the right parameter to change ??? //or main Mixer.gain ?
       this->notes[i]->amp = f;
     }
   }
@@ -110,7 +103,7 @@ void Voices::setAmplitude(float f){
 
 ////////// Private methods //////////
 
-bool Voices::is_note_played(int note){ //kind of a duplicate of find_stop_voice
+bool Voices::is_note_played(int note){
   for(int i = 0; i< this->total_voices ; i++){
     if(this->notes[i]->note == note){
       return true ;

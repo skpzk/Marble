@@ -10,8 +10,7 @@ Env::Env(void){
     }
     this->timeinterval = 1./SAMPLE_RATE;
     this->lastValue = 0;
-    this->state = -1;// 0: a, 1: d, 2: s, 3: r, -1: inactive
-    //this->state is not really useful in this design
+
     this->isOn = false;
     this->isActive = false;
 
@@ -45,21 +44,32 @@ void Env::setR(float r){
 }
 
 sample_t Env::computeAttack(){
-    return MAX * this->elapsed / this->a;
+    if(this->a!=0){
+        return MAX * this->elapsed / this->a;
+    }else{
+        return MAX;
+    } 
 }
 
 sample_t Env::computeDecay(){
-    return MAX * (1 - (1 - this->s) * (this->elapsed - this->a) / this->d);
+    if(this->d != 0){
+        return MAX * (1 - (1 - this->s) * (this->elapsed - this->a) / this->d);
+    }else{
+        return MAX * this->s;
+    }
 }
 
 sample_t Env::computeRelease(){
-    return 1 * (1 - this->elapsed / this->r) * this->lastValue;
+    if(this->r != 0){
+        return 1 * (1 - this->elapsed / this->r) * this->lastValue;
+    }else{
+        return 0;
+    }
 }
 
 void Env::output(void* outputBuffer){
     sample_t* out = (sample_t*) outputBuffer;
 
-    
     for(int i=0; i<(FRAMES_PER_BUFFER); i++){
         if(this->isOn){
             if(this->elapsed < this->a){

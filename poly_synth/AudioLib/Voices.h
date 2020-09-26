@@ -12,7 +12,6 @@ class Voices {
     void on(int note);
     void off(int note);
     void update_status();
-    void connectToMixer(Mixer*);
     
     void setWaveform(int);
     void setAmplitude(float);
