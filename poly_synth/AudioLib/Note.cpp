@@ -49,3 +49,10 @@ void Note::setWaveform(int w){
     printf("Wrong waveform type\n");
   }
 }
+
+void Note::setADSR(float* adsr){
+  this->env.setA(adsr[0]);
+  this->env.setD(adsr[1]);
+  this->env.setS(adsr[2]);
+  this->env.setR(adsr[3]);
+}

@@ -15,6 +15,7 @@ class Voices {
     
     void setWaveform(int);
     void setAmplitude(float);
+    int setADSR(float, float, float, float);
 
     void printVoices();
 
@@ -29,7 +30,6 @@ class Voices {
     int  find_free_voice();
     void update_order(int n);
     int  find_last_order();
-
 };
 
 #endif

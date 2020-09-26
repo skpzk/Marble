@@ -27,6 +27,8 @@ class Note {
   
     Va va;
 
+    void setADSR(float*);
+
   private:
     Osc *osc;
     Env env;

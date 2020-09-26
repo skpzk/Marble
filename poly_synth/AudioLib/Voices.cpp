@@ -101,6 +101,19 @@ void Voices::setAmplitude(float f){
   }
 }
 
+int Voices::setADSR(float a, float d, float s, float r){
+  float adsr[] = {a, d, s, r};
+  for(int i=0; i<4; i++){
+    if(adsr[i] < 0 || adsr[i] > 127){
+      printf("Env parameters out of range\n");
+      return -1;
+    }
+  }
+  for(int i=0; i<this->total_voices; i++){
+    this->notes[i]->setADSR(adsr);
+  }
+}
+
 ////////// Private methods //////////
 
 bool Voices::is_note_played(int note){
