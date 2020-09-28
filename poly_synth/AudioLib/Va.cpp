@@ -12,22 +12,20 @@ void Va::output(void* outputBuffer){
         if(this->has_env){
             this->env->output(this->bufEnv);
         }else{
-            this->init(this->bufEnv);
+            this->init(this->bufEnv, 1);
         }
     }else{
-        this->init(this->bufOsc);
-        this->init(this->bufEnv);
+        this->init(this->bufOsc, 0);
+        this->init(this->bufEnv, 1);
     }
     for(int i=0; i<(FRAMES_PER_BUFFER); i++){ // Va is MONO !
-        
         *out++ = bufOsc[i] * ((float) bufEnv[i] / MAX) * this->volume;  // mono
-
     }
 }
 
-void Va::init(sample_t* buffer){
+void Va::init(sample_t* buffer, int value){
     for(int i=0; i<(FRAMES_PER_BUFFER); i++){     
-        *buffer++ = 0;
+        *buffer++ = value;
     }
 }
 

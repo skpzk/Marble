@@ -14,7 +14,7 @@ class Va{
 		Env* env;
 		sample_t bufOsc[FRAMES_PER_BUFFER];
 		sample_t bufEnv[FRAMES_PER_BUFFER];
-		void init(sample_t*);
+		void init(sample_t*, int);
 	public:
 		void setVolume(float);
 		void output(void*);

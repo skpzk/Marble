@@ -22,10 +22,7 @@ class Osc{
 		void setWave(char);
 		void output(void*);
 		int type=1;
-		Osc(float freq){
-			this->setFreq(freq);
-			this->setVolume(1);
-		}
+		Osc(float);
 };
 
 #endif

@@ -1,20 +1,25 @@
 #include "Oscs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+
+Osc::Osc(float freq){
+    this->setFreq(freq);
+    this->setVolume(1);
+    this->phase = 0.0;
+}
 
 void Osc::output(void* outputBuffer){
-  // printf("Getting data from Osc\n");
-  sample_t *out = (sample_t*)outputBuffer;
+    // printf("Getting data from Osc\n");
+    sample_t *out = (sample_t*)outputBuffer;
 
-	for(int i=0; i<FRAMES_PER_BUFFER; i++){ // Osc is MONO !
-    //printf("Osc : this->wave.wave[(int)this->phase] = %d ", this->wave.wave[(int)this->phase]);
-    *out++ = this->wave.wave[(int)this->phase] * this->volume;  // mono
-    // *out++ = 0;
+    for(int i=0; i<FRAMES_PER_BUFFER; i++){ // Osc is MONO !
+        *out++ = this->wave.wave[(int)this->phase] * this->volume;  // mono
 
-    this->phase += (this->phaseIncrement);
-    if( this->phase >= TABLE_SIZE ) this->phase -= TABLE_SIZE;
-    //printf("osc phase = %f\n", this->phase);
-  }
+        this->phase += (this->phaseIncrement);
+        if( this->phase >= TABLE_SIZE ) this->phase -= TABLE_SIZE;
+        //printf("osc phase = %f\n", this->phase);
+    }
 }
 
 void Osc::setWave(char type){

@@ -1,5 +1,25 @@
 #include "Wave.h"
 
+Wave::Wave(int type) {
+    switch (type) {
+    case 0: //sine wave
+        this->sine();
+        break;
+
+    case 1: //saw wave
+        this->saw();
+        break;
+
+    case 2: //tri wave
+        this->tri();
+        break;
+
+    case 3: //square wave
+        this->square();
+        break;
+    }
+};
+
 void Wave::sine(){
   for(int i=0; i<TABLE_SIZE; i++ )
   {

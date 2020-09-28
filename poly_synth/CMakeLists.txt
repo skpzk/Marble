@@ -27,10 +27,17 @@ add_executable(audioAPIforMarble main.cpp
 
 find_package(Threads REQUIRED)
 find_package(portaudio)
+find_package(rtmidi)
 
 if (WIN32) 
-    target_include_directories(audioAPIforMarble PUBLIC "C:/Program Files (x86)/portaudio/include")
-    target_link_libraries(audioAPIforMarble "C:/Program Files (x86)/portaudio/lib/portaudio_x64.lib")
+    target_include_directories(audioAPIforMarble PUBLIC 
+        "C:/Program Files (x86)/portaudio/include")
+    target_link_libraries(audioAPIforMarble 
+        "C:/Program Files (x86)/portaudio/lib/portaudio_x64.lib"
+        "D:/Vagrant/c++/rtmidi/out/install/x64-Debug (default)/lib/rtmidi.lib"
+        Threads::Threads
+        winmm)
+    set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__WINDOWS_MM__)
 endif (WIN32)
 
 if (UNIX)
