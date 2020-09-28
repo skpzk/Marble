@@ -4,9 +4,6 @@ project(audioAPIforMarble LANGUAGES C CXX VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-# add_library(libportaudio /usr/local/lib/)
-
-
 set(SOURCES
     Utils/wait.h
     AudioAPI/AudioConstants.h
@@ -22,29 +19,31 @@ set(SOURCES
     AudioLib/Voices.cpp             AudioLib/Voices.h
     AudioLib/Note.cpp               AudioLib/Note.h
     AudioLib/Env.cpp                AudioLib/Env.h
-    )
+)
 
 add_executable(audioAPIforMarble main.cpp 
                 ${SOURCES} 
                 )
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+find_package(portaudio)
 
-target_link_libraries(audioAPIforMarble  /usr/local/lib/libportaudio.a
-                      Threads::Threads
-                      asound
-                      jack
-                      rt
-                      m     
-                      pthread  
-                      )
+if (WIN32) 
+    target_include_directories(audioAPIforMarble PUBLIC "C:/Program Files (x86)/portaudio/include")
+    target_link_libraries(audioAPIforMarble "C:/Program Files (x86)/portaudio/lib/portaudio_x64.lib")
+endif (WIN32)
 
-set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__LINUX_ALSA__)
-#target_compile_options(audioAPIforMarble BEFORE -D__LINUX_ALSA__)
+if (UNIX)
+    target_link_libraries(audioAPIforMarble  /usr/local/lib/libportaudio.a
+                          Threads::Threads
+                          asound
+                          jack
+                          rt
+                          m)
 
+    set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__LINUX_ALSA__)
+endif (UNIX)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
-

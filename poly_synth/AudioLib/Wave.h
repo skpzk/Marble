@@ -1,6 +1,6 @@
 #ifndef wave_h_
 #define wave_h_
-
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <stdlib.h>
 #include "../AudioAPI/AudioConstants.h"
