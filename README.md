@@ -8,6 +8,6 @@ usage :
 
 std::cout << dline() << "message" << std::endl;
 // ou bien
-printf("%s message", dline());
+printf("%s message", dline().c_str());
 
 ```
