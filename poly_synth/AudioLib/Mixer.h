@@ -8,7 +8,7 @@
 class Mixer{
 	public:
 		//void addInput(Osc*);
-		void addInput(Va*);
+		void addInput(Vca*);
 		void output(void*, int, bool);
 		int test = 17;
 	private:

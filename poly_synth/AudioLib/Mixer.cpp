@@ -18,7 +18,7 @@ void Mixer::output(void* outputBuffer, int framesPerBuffer, bool Stereo){
 		}
 	}
 }
-void Mixer::addInput(Va* input){
+void Mixer::addInput(Vca* input){
 	this->numInputs++;
 	this->inputs.addElement(input);
 }

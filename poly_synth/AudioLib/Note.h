@@ -2,7 +2,7 @@
 #define Note_h
 #include "Oscs.h"
 #include "../AudioAPI/AudioConstants.h"
-#include "Va.h"
+#include "Vca.h"
 #include "Env.h"
 
 class Note {
@@ -25,7 +25,7 @@ class Note {
 
     bool isActive();
   
-    Va va;
+    Vca vca;
 
     void setADSR(float*);
 

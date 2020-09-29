@@ -1,11 +1,11 @@
-#ifndef va_h_
-#define va_h_
+#ifndef vca_h_
+#define vca_h_
 
 #include "../AudioAPI/AudioConstants.h"
 #include "Oscs.h"
 #include "Env.h"
 
-class Va{
+class Vca{
 	private:
 		float volume = 1;
 		bool has_env=false;

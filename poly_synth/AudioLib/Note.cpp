@@ -9,8 +9,8 @@ Note::Note(){
   this->note = -1;
   this->order = -1;
 
-  this->va.setOsc(this->osc);
-  this->va.setEnv(&this->env);
+  this->vca.setOsc(this->osc);
+  this->vca.setEnv(&this->env);
 
 }
 

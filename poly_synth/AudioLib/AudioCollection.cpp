@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int AudioCollection::addElement(Va* element) {
-	Va *va = element;
-	int N = this->numOfVas;
-	this->vas[N] = va;
+int AudioCollection::addElement(Vca* element) {
+	Vca *vca = element;
+	int N = this->numOfVcas;
+	this->vcas[N] = vca;
 	this->numOfElements++;
-	this->numOfVas++;
+	this->numOfVcas++;
 	return 0;
 }
 
@@ -36,8 +36,8 @@ void AudioCollection::output(void* outputBuffer, bool Stereo){
 	int numElements = this->numOfElements;
 	sample_t ** inputBuffer = allocateBuffer(numElements, FRAMES_PER_BUFFER);
 	int i, j;
-	for(i=0; i<this->numOfVas; i++){
-		this->vas[i]->output((void*) inputBuffer[i]);// + this->numOfOscs]);
+	for(i=0; i<this->numOfVcas; i++){
+		this->vcas[i]->output((void*) inputBuffer[i]);// + this->numOfOscs]);
 	}
 	//write sound data to buffer
 	// printf("AudioCollection : nbOscs = %d, nbElements = %d\n", this->numOfOscs, this->numOfElements);

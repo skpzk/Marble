@@ -3,18 +3,18 @@
 
 #include "../AudioAPI/AudioConstants.h"
 #include "./Oscs.h"
-#include "Va.h"
+#include "Vca.h"
 
 class AudioCollection{
 	public:
-		int addElement(Va*);
+		int addElement(Vca*);
 		int removeElement(void*);
 		void output(void*, bool);
 		int numOfElements=0;
 	private:
-		Va* vas[VOICES];
+		Vca* vcas[VOICES];
 		int numOfOscs = 0;
-		int numOfVas = 0;
+		int numOfVcas = 0;
 };
 
 #endif
