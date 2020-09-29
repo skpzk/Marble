@@ -16,7 +16,7 @@ set(SOURCES
     AudioLib/Mixer.cpp              AudioLib/Mixer.h
     AudioLib/AudioCollection.cpp    AudioLib/AudioCollection.h
     AudioLib/Wave.cpp               AudioLib/Wave.h
-    AudioLib/Va.cpp                 AudioLib/Va.h
+    AudioLib/Vca.cpp                AudioLib/Vca.h
     AudioLib/Voices.cpp             AudioLib/Voices.h
     AudioLib/Note.cpp               AudioLib/Note.h
     AudioLib/Env.cpp                AudioLib/Env.h
