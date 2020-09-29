@@ -6,6 +6,7 @@ enable_testing()
 
 set(SOURCES
     Utils/wait.h
+    Utils/DebugUtils.cpp    Utils/DebugUtils.h
     AudioAPI/AudioConstants.h
     AudioAPI/audio.cpp      AudioAPI/audio.h
     AudioAPI/Midi.cpp       AudioAPI/Midi.h
@@ -26,10 +27,11 @@ add_executable(audioAPIforMarble main.cpp
                 )
 
 find_package(Threads REQUIRED)
-find_package(portaudio)
-find_package(rtmidi)
+
 
 if (WIN32) 
+    find_package(portaudio)
+    find_package(rtmidi)
     target_include_directories(audioAPIforMarble PUBLIC 
         "C:/Program Files (x86)/portaudio/include")
     target_link_libraries(audioAPIforMarble 

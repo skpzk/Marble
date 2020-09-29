@@ -7,6 +7,7 @@
 #include "AudioAPI/audio.h"
 #include "AudioLib/Voices.h"
 #include "Utils/wait.h" //used to wait for X time intervals. (sleep_for is defined here)
+#include "Utils/DebugUtils.h"
 
 using namespace std;
 
@@ -17,6 +18,9 @@ void raiseFlag(int param)
 }
 
 int main(){
+
+	std::cout << dline() << "test dline" << std::endl;
+	printf("%stest with printf\n", dline().c_str());
 
 	signal(SIGINT, raiseFlag);
 

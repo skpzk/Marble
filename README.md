@@ -1,3 +1,13 @@
 # marble
 
-J'ai fait un petit synthé polyphonique ! Il va probablement falloir que tu adaptes le code cmake pour le faire tourner. Il y a pas mal de choses à revoir pour que ce soit un peu plus propre, je me suis dit que ça nous ferait quand même une base.
+Yo ! J'ai ajouté une fonction que j'utilise souvent pour le debug, qui affiche le fichier, la fonction et la ligne qui sont en train d'écrire quelque chose dans le terminal.
+
+usage :
+```
+#include "Utils/DebugUtils.h"
+
+std::cout << dline() << "message" << std::endl;
+// ou bien
+printf("%s message", dline());
+
+```
