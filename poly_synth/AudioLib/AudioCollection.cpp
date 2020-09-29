@@ -31,8 +31,7 @@ void deleteBuffer(sample_t ** inputBuffer, int a){
 }
 
 void AudioCollection::output(void* outputBuffer, bool Stereo){
-	// printf("Getting data from AudioCollection\nnum elts = %d\n", this->numOfElements);
-	// printf("num vas = %d\nnum oscs = %d\n", this->numOfVas, this->numOfOscs);
+	
 	sample_t *out = (sample_t*)outputBuffer;
 	int numElements = this->numOfElements;
 	sample_t ** inputBuffer = allocateBuffer(numElements, FRAMES_PER_BUFFER);

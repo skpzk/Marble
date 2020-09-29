@@ -34,9 +34,10 @@ int main(){
 	//or use directly the port number
 
 	Audio audio;
-	audio.start();
 
 	audio.addInputFromMixer(&voices.mixer); // the audio class gets audio data from voices.mixer
+
+	audio.start(); //start should be called after addInputFromMixer
 
 	while(flagLoop){
 		sleep_for(100ms);

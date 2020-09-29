@@ -114,6 +114,7 @@ int Voices::setADSR(float a, float d, float s, float r){
   for(int i=0; i<this->total_voices; i++){
     this->notes[i]->setADSR(adsr);
   }
+  return 0;
 }
 
 ////////// Private methods //////////

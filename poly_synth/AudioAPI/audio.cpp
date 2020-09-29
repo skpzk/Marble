@@ -18,7 +18,11 @@ int patestCallback( const void *inputBuffer, void *outputBuffer,
     int finished = 0;
     (void) inputBuffer; /* Prevent unused variable warnings. */
 
-	data->mixer->output(out, framesPerBuffer, true);
+	if(data->mixer != NULL){
+		//if Audio::addInputFromMixer is called before Audio::start, mixer != NULL
+		data->mixer->output(out, framesPerBuffer, true);
+	}
+
     return finished;
 }
 

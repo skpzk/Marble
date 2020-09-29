@@ -6,7 +6,6 @@
 
 void Mixer::output(void* outputBuffer, int framesPerBuffer, bool Stereo){
 	//get sound data
-	// printf("Getting sound data from Mixer\nNum inputs = %d\n", this->numInputs);
 	if(this->numInputs > 0){
 		this->inputs.output(outputBuffer, Stereo);
 	}else{

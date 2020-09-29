@@ -10,7 +10,7 @@
 #include "../AudioLib/Mixer.h"
 
 typedef struct{
-	Mixer* mixer;
+	Mixer* mixer = NULL;
 }paData;
 
 int patestCallback( const void *inputBuffer, void *outputBuffer,
