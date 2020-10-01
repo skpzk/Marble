@@ -1,4 +1,5 @@
 #include "Oscs.h"
+#include <iostream>
 
 Osc::Osc(float freq){
     this->setFreq(freq);
@@ -19,7 +20,6 @@ void Osc::output(void* outputBuffer, bool stereo){
 
         this->phase += (this->phaseIncrement);
         if( this->phase >= TABLE_SIZE ) this->phase -= TABLE_SIZE;
-        //printf("osc phase = %f\n", this->phase);
     }
 }
 
@@ -46,6 +46,85 @@ void Osc::setVolume(float volume){
 
 void Osc::updatePhaseIncrement(){
   this->phaseIncrement = this->freq * TABLE_SIZE / SAMPLE_RATE;
-  // printf("osc phase increment = %f\n", this->phaseIncrement);
 }
 
+
+
+// Variable wt oscillators
+
+VOsc::VOsc(float freq) {
+    this->setFreq(freq);
+    this->setVolume(1);
+    this->phase = 0;
+    this->waveshape = new WaveShape();
+    this->interpFactor = 0;
+    this->audioOutput = new AudioOutput(this);
+}
+
+void VOsc::selectWaveShape(int type) {
+    this->waveshape->selectWaveShape(type);
+
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        this->wave_output[i] = this->waveshape->waveforms[0][i];
+    }
+}
+
+void VOsc::setInterpolation(float interpValue)
+{
+    this->interpFactor = interpValue * (this->waveshape->numWaves - 1);
+}
+
+void VOsc::interpolate()
+{
+    double intpart, fractpart;
+    fractpart = modf(this->interpFactor, &intpart);
+
+    sample_t* wave_1;
+    sample_t* wave_2;
+    wave_1 = this->waveshape->waveforms[(int)intpart];
+    wave_2 = this->waveshape->waveforms[(int)intpart + 1];
+
+    std::cout << intpart << " " << fractpart << std::endl;
+
+    if (fractpart != 0) {
+        for (int i = 0; i < TABLE_SIZE; i++) {
+            this->wave_output[i] = wave_1[i] * (1 - fractpart) + wave_2[i] * fractpart;
+        }
+    }
+}
+
+void VOsc::output(void* outputBuffer, bool stereo) {
+    sample_t* out = (sample_t*)outputBuffer;
+
+    this->interpolate();
+
+    for (int i = 0; i < FRAMES_PER_BUFFER; i++) { // Osc is MONO !
+        *out++ = this->wave_output[(int)this->phase] * this->volume;  // mono/left
+        if (stereo) {
+            *out++ = this->wave_output[(int)this->phase] * this->volume;  // right
+        }
+        this->phase += (this->phaseIncrement);
+        if (this->phase >= TABLE_SIZE) this->phase -= TABLE_SIZE;
+    }
+}
+
+void VOsc::setFreq(float freq) {
+    this->freq = freq;
+    this->updatePhaseIncrement();
+}
+
+void VOsc::setNote(float note) {
+    this->freq = mtof(note);
+    this->updatePhaseIncrement();
+}
+float VOsc::getNote() {
+    return ftom(this->freq);
+}
+
+void VOsc::setVolume(float volume) {
+    this->volume = volume;
+}
+
+void VOsc::updatePhaseIncrement() {
+    this->phaseIncrement = this->freq * TABLE_SIZE / SAMPLE_RATE;
+}

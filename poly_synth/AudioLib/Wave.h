@@ -9,6 +9,7 @@
 class Wave{
   public:
     Wave(int);
+    Wave();
     sample_t wave[TABLE_SIZE];
   private:
     sample_t maxValue = MAX;
@@ -16,6 +17,19 @@ class Wave{
     void tri();
     void square();
     void saw();
+};
+
+
+class WaveShape {
+public:
+    WaveShape();
+    int numWaves;
+    sample_t** waveforms = NULL;
+    void addWave(Wave*);
+    void selectWaveShape(int);
+    
+private:
+    void basicShapes();
 };
 
 #endif

@@ -19,6 +19,7 @@ class AudioPatch{
         void on(int);
         void off(int);
         void cc(int, int);
+        void setInterpolation(float);
     private:
         Voices* voices=NULL;
         Audio* audio=NULL;

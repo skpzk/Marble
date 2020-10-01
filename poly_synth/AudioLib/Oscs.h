@@ -6,6 +6,7 @@
 
 #include "Wave.h"
 class Osc;
+class VOsc;
 #include "AudioOutput.h"
 
 class Osc{
@@ -28,5 +29,31 @@ class Osc{
 		int type=1;
 		Osc(float);
 };
+
+
+class VOsc {
+	private:
+		float freq;
+		float volume;
+		float phase;
+		float phaseIncrement;
+		float interpFactor;
+		WaveShape* waveshape;
+		sample_t wave_output[TABLE_SIZE];
+		void updatePhaseIncrement();
+
+	public:
+		VOsc(float);
+		void selectWaveShape(int);
+		void interpolate();
+		void setInterpolation(float);
+		void setVolume(float);
+		void setFreq(float);
+		float getNote();
+		void setNote(float);
+		void output(void*, bool);
+		AudioOutput* audioOutput;
+		int type = 1;
+	};
 
 #endif

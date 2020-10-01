@@ -5,6 +5,11 @@ AudioOutput::AudioOutput(Osc* osc){
     this->outputType = osc_out;
 }
 
+AudioOutput::AudioOutput(VOsc* vosc) {
+    this->vosc = vosc;
+    this->outputType = vosc_out;
+}
+
 AudioOutput::AudioOutput(BiquadFilter* filter){
     this->filter = filter;
     this->outputType = filter_out;
@@ -28,6 +33,9 @@ void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo){
     switch(this->outputType){
         case osc_out:
             this->osc->output(outputBuffer, stereo);
+            break;
+        case vosc_out:
+            this->vosc->output(outputBuffer, stereo);
             break;
         case filter_out:
             this->filter->output(outputBuffer, stereo);

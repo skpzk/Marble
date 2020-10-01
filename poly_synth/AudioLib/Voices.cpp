@@ -71,7 +71,6 @@ void Voices::update_status(){//on détecte les enveloppes inactives, on enlève 
       n = this->notes[i]->order ;
       this->notes[i]->order = -1;
       update_order(n);
-      printf("Update status\n");
     }
   }
 }
@@ -90,6 +89,19 @@ void Voices::setWaveform(int w){
   else{
     printf("Wrong waveform type\n");
   }
+}
+
+void Voices::selectWaveShape(int type) {
+    for (int i = 0; i < this->total_voices; i++) {
+        this->notes[i]->selectWaveShape(type);
+    }
+}
+
+void Voices::setInterpolation(float value)
+{
+    for (int i = 0; i < this->total_voices; i++) {
+        this->notes[i]->setInterpolation(value);
+    }
 }
 
 void Voices::setAmplitude(float f){

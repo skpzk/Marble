@@ -8,17 +8,17 @@ class Mixer;
 #include "Vca.h"
 #include "AudioOutput.h"
 
-class Mixer{
-	public:
-		void addInput(AudioOutput*);
-		void output(void*, bool);
-		int test = 17;
-		AudioOutput* audioOutput=NULL;
-		Mixer();
-	private:
-		int numInputs = 0;
-		AudioOutput* inputs[VOICES];
-		void writeInputsToBuffer(void* outputBuffer, bool Stereo);
+class Mixer {
+public:
+    void addInput(AudioOutput*);
+    void output(void*, bool);
+    int test = 17;
+    AudioOutput* audioOutput = NULL;
+    Mixer();
+private:
+    int numInputs = 0;
+    AudioOutput* inputs[VOICES];
+    void writeInputsToBuffer(void* outputBuffer, bool Stereo);
 };
 
 #endif

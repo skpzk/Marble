@@ -1,5 +1,7 @@
 #include "Wave.h"
 
+// WAVE CLASS
+
 Wave::Wave(int type) {
     switch (type) {
     case 0: //sine wave
@@ -18,7 +20,12 @@ Wave::Wave(int type) {
         this->square();
         break;
     }
-};
+}
+
+Wave::Wave()
+{
+    this->sine();
+}
 
 void Wave::sine(){
   for(int i=0; i<TABLE_SIZE; i++ )
@@ -59,4 +66,40 @@ void Wave::saw(){
       this->wave[i] = SILENCE + (sample_t) (this->maxValue - 2. * this->maxValue
         * (float) i / TABLE_SIZE);
   }
+}
+
+
+// WAVETABLE CLASS
+
+WaveShape::WaveShape()
+{
+    this->numWaves = 0;
+    this->waveforms = new sample_t* [MAX_TABLE_NUM];
+}
+
+void WaveShape::selectWaveShape(int type) {
+    switch (type) {
+    case 0:
+        this->basicShapes();
+        break;
+    }
+}
+
+void WaveShape::basicShapes()
+{
+    this->addWave(new Wave(SINE));
+    this->addWave(new Wave(SQUARE));
+    this->addWave(new Wave(TRIANGLE));
+    this->addWave(new Wave(SAW));
+}
+
+void WaveShape::addWave(Wave* wave)
+{
+    if (this->numWaves < MAX_TABLE_NUM + 1) {
+        this->waveforms[this->numWaves] = wave->wave;
+        ++this->numWaves;
+    }
+    else {
+        printf("Maximum number of waveforms exceeded");
+    }
 }

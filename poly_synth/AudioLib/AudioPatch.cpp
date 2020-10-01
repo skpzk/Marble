@@ -1,9 +1,12 @@
 #include "AudioPatch.h"
+#include "AudioPatch.h"
 
 AudioPatch::AudioPatch(){
     
     this->voices = new Voices(VOICES); //the Voices class manages polyphony
-	this->voices->setWaveform(3); //0: sine; 1: saw; 2: tri; 3: square
+
+	//this->voices->setWaveform(3); //0: sine; 1: saw; 2: tri; 3: square
+    this->voices->selectWaveShape(0); //0: basic shapes
 	this->voices->setAmplitude(1);
 	this->voices->setADSR(30, 10, 100, 80);
 
@@ -25,19 +28,24 @@ AudioPatch::AudioPatch(){
 
     this->audio->start();
 }
+
 void AudioPatch::updateVoicesStatus(){
     this->voices->update_status();
 }
+
 void AudioPatch::stop(){
     this->midi->close();
 	this->audio->stop();
 }
+
 void AudioPatch::on(int note){
     this->voices->on(note);
 }
+
 void AudioPatch::off(int note){
     this->voices->off(note);
 }
+
 void AudioPatch::cc(int ccNumber, int ccValue){
     switch(ccNumber){
         case 14:
@@ -47,4 +55,9 @@ void AudioPatch::cc(int ccNumber, int ccValue){
             this->filter->setMidiQ(ccValue);
             break;
     }
+}
+
+void AudioPatch::setInterpolation(float value)
+{
+    this->voices->setInterpolation(value);
 }

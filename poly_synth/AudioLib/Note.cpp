@@ -3,24 +3,24 @@
 Note::Note(){
 
   this->osc = new Osc(440.);
+  this->vosc = new VOsc(440.);
 
   this->note = -1;
   this->order = -1;
 
-  this->vca.setInput(this->osc->audioOutput);
+  this->vca.setInput(this->vosc->audioOutput);
   this->vca.setEnv(&this->env);
 }
 
 void Note::on(int midinote){
-  // printf("Note::on\n");
   // set osc note
   this->env.on();
-  this->osc->setNote(midinote);
+  //this->osc->setNote(midinote);
+  this->vosc->setNote(midinote);
   this->note = midinote ;
 }
 
 void Note::off(int midinote){
-  // printf("Note::off\n");
   this->setAmplitude(0);
   this->env.off();
 }
@@ -45,6 +45,15 @@ void Note::setWaveform(int w){
   else{
     printf("Wrong waveform type\n");
   }
+}
+
+void Note::selectWaveShape(int type) {
+    this->vosc->selectWaveShape(type);
+}
+
+void Note::setInterpolation(float value)
+{
+    this->vosc->setInterpolation(value);
 }
 
 void Note::setADSR(float* adsr){

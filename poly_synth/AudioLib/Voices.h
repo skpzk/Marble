@@ -13,6 +13,9 @@ class Voices {
     void off(int note);
     void update_status();
     
+    void selectWaveShape(int);
+    void setInterpolation(float);
+
     void setWaveform(int);
     void setAmplitude(float);
     int setADSR(float, float, float, float);

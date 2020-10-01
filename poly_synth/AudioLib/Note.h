@@ -20,7 +20,10 @@ class Note {
     //method to start and stop
     void on(int);
     void off(int);
-    
+
+    void selectWaveShape(int);
+    void setInterpolation(float);
+
     void setWaveform(int);
     void setAmplitude(float);
 
@@ -32,6 +35,7 @@ class Note {
 
   private:
     Osc *osc;
+    VOsc* vosc;
     Env env;
 };
 

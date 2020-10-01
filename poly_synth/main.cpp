@@ -13,7 +13,7 @@ void raiseFlag(int param)
     flagLoop = false;
 }
 
-int main(){
+int main() {
 
 	signal(SIGINT, raiseFlag);
 

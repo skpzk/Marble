@@ -27,7 +27,7 @@ void mycallback( double deltatime, std::vector< unsigned char > *message, void *
   AudioPatch* patch = (AudioPatch*) userData;
   // printMidiMessage(deltatime, message);
 
-  char bytes[2];
+  char bytes[4];
   sprintf(bytes, "%x", (int)message->at(0)); //Midi messages are easier to decode in hexa
   //upper 4 bits are event type
   //lower 4 bits are channel #
@@ -51,9 +51,10 @@ void mycallback( double deltatime, std::vector< unsigned char > *message, void *
   else if(bytes[0]=='b'){//cc event
     std::cout << "CC " << (int)message->at(1) << ", value = " << (int)message->at(2) << std::endl;
     patch->cc((int)message->at(1), (int)message->at(2));
-  }
-  
-
+  }/*
+  if ((int)message->at(0) == 176) {
+      patch->setInterpolation(((float)message->at(2) / (float)127));
+  }*/
 }
 
 // This function should be embedded in a try/catch block in case of
