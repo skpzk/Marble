@@ -4,7 +4,9 @@
 #include <iostream>
 #include <cstdlib>
 #include "RtMidi.h"
-#include "../AudioLib/Voices.h"
+
+class Midi;
+#include "../AudioLib/AudioPatch.h"
 
 void usage( void );
 
@@ -17,11 +19,11 @@ class Midi{
 		int open(int);
 		int close();
         
-		Midi(Voices* voices){
-			this->voices = voices;
+		Midi(AudioPatch* patch){
+			this->patch = patch;
 		}
 	private:
-		Voices* voices;
+		AudioPatch* patch;
 		RtMidiIn *midiin;
 		bool chooseMidiPort();
 };

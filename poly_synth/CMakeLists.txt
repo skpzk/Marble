@@ -15,7 +15,7 @@ set(SOURCES
     AudioAPI/MidiUtils.cpp  AudioAPI/MidiUtils.h
     AudioLib/Oscs.cpp               AudioLib/Oscs.h
     AudioLib/Mixer.cpp              AudioLib/Mixer.h
-#    AudioLib/AudioCollection.cpp    AudioLib/AudioCollection.h
+    AudioLib/AudioPatch.cpp         AudioLib/AudioPatch.h
     AudioLib/Wave.cpp               AudioLib/Wave.h
     AudioLib/Vca.cpp                AudioLib/Vca.h
     AudioLib/Voices.cpp             AudioLib/Voices.h

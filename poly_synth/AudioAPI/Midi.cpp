@@ -15,7 +15,7 @@
 void printMidiMessage(double deltatime, std::vector< unsigned char > *message){
   unsigned int nBytes = message->size();
   for ( unsigned int i=0; i<nBytes; i++ ){
-    std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
+    std::cout << "Byte " << i << " = " << std::hex << (int)message->at(i) << ", ";
   }
   if ( nBytes > 0 )
     std::cout << "stamp = " << deltatime << std::endl;
@@ -23,16 +23,37 @@ void printMidiMessage(double deltatime, std::vector< unsigned char > *message){
 
 void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
 {
-  Voices* voices = (Voices*) userData;
-  //printMidiMessage(deltatime, message);
-  if((int) message->at(0) == 144 && (int) message->at(2) != 0){
-    std::cout << "Note On " << (int)message->at(1) << std::endl;
-    voices->on((int)message->at(1));
-  }
-  if((int) message->at(0) == 128 || (int) message->at(2) == 0){
+  // Voices* voices = (Voices*) userData;
+  AudioPatch* patch = (AudioPatch*) userData;
+  // printMidiMessage(deltatime, message);
+
+  char bytes[2];
+  sprintf(bytes, "%x", (int)message->at(0)); //Midi messages are easier to decode in hexa
+  //upper 4 bits are event type
+  //lower 4 bits are channel #
+
+  if(bytes[0]=='9'){//note on event
+    if((int) message->at(2) != 0){ //if volume > 0
+      std::cout << "Note On " << (int)message->at(1) << std::endl;
+      // voices->on((int)message->at(1));
+      patch->on((int)message->at(1));
+    }
+    else{ //if volume == 0, treat note on as a note off
+      std::cout << "Note Off " << (int)message->at(1) << std::endl;
+      // voices->off((int)message->at(1));
+      patch->off((int)message->at(1));
+    }
+  }else if(bytes[0]=='8'){//note off event
     std::cout << "Note Off " << (int)message->at(1) << std::endl;
-    voices->off((int)message->at(1));
+    // voices->off((int)message->at(1));
+    patch->off((int)message->at(1));
   }
+  else if(bytes[0]=='b'){//cc event
+    std::cout << "CC " << (int)message->at(1) << ", value = " << (int)message->at(2) << std::endl;
+    patch->cc((int)message->at(1), (int)message->at(2));
+  }
+  
+
 }
 
 // This function should be embedded in a try/catch block in case of
@@ -62,7 +83,7 @@ int Midi::open(int portNumber){
 		// Set our callback function.  This should be done immediately after
 		// opening the port to avoid having incoming messages written to the
 		// queue instead of sent to the callback function.
-		midiin->setCallback( &mycallback, this->voices);
+		midiin->setCallback( &mycallback, this->patch);
         // midiin->setCallback( &mycallback, mycallback );
 
 		// Don't ignore sysex, timing, or active sensing messages.

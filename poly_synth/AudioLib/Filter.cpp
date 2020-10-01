@@ -3,7 +3,8 @@
 BiquadFilter::BiquadFilter(){
     this->maxFc = SAMPLE_RATE/2;
     this->T = 1. / SAMPLE_RATE;
-    this->setQ(1.);
+    this->Q = 1.;
+	this->Qinv = 1./this->Q;
     this->setFc(220.);
     this->audioOutput = new AudioOutput(this);
 }
@@ -27,6 +28,10 @@ void BiquadFilter::setMidiFc(float fc){
 void BiquadFilter::setQ(float Q){
 	this->Q = trim(Q, 0.01, 100);
 	this->Qinv = 1./this->Q;
+    this->computeCoefs();
+}
+void BiquadFilter::setMidiQ(float Q){
+    this->setQ(Q * 5./127.);
 }
 
 void BiquadFilter::computeCoefs(){

@@ -30,6 +30,7 @@ class BiquadFilter{
         void setFc(float);
         void setMidiFc(float);
         void setQ(float);
+        void setMidiQ(float);
         BiquadFilter();
 
     private:

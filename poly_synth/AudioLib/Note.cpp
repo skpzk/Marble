@@ -12,7 +12,7 @@ Note::Note(){
 }
 
 void Note::on(int midinote){
-  printf("Note::on\n");
+  // printf("Note::on\n");
   // set osc note
   this->env.on();
   this->osc->setNote(midinote);
@@ -20,7 +20,7 @@ void Note::on(int midinote){
 }
 
 void Note::off(int midinote){
-  printf("Note::off\n");
+  // printf("Note::off\n");
   this->setAmplitude(0);
   this->env.off();
 }
