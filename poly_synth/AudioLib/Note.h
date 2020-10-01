@@ -36,7 +36,7 @@ class Note {
   private:
     Osc *osc;
     VOsc* vosc;
-    Env env;
+    Env env = Env();
 };
 
 #endif

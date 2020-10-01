@@ -13,7 +13,7 @@ private:
 	float volume = 1;
 	bool has_env = false;
 	bool has_input = false;
-	Env* env;
+	AudioOutput* env;
 	AudioOutput* input;
 
 	sample_t bufInput[FRAMES_PER_BUFFER];
@@ -23,7 +23,7 @@ public:
 	void output(void*, bool);
 	AudioOutput* audioOutput;
 	void setInput(AudioOutput*);
-	void setEnv(Env*);
+	void setEnv(AudioOutput*);
 	Vca();
 };
 

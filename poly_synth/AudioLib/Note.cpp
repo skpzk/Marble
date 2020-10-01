@@ -9,7 +9,8 @@ Note::Note(){
   this->order = -1;
 
   this->vca.setInput(this->vosc->audioOutput);
-  this->vca.setEnv(&this->env);
+  this->vca.setEnv(this->env.audioOutput);
+  this->vosc->setInput(this->env.audioOutput);
 }
 
 void Note::on(int midinote){

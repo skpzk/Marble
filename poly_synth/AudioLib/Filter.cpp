@@ -26,7 +26,7 @@ void BiquadFilter::setMidiFc(float fc){
 }
 
 void BiquadFilter::setQ(float Q){
-	this->Q = trim(Q, 0.01, 100);
+	this->Q = trim(Q, 1, 100);
 	this->Qinv = 1./this->Q;
     this->computeCoefs();
 }

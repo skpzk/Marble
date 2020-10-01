@@ -31,25 +31,27 @@ void mycallback( double deltatime, std::vector< unsigned char > *message, void *
   sprintf(bytes, "%x", (int)message->at(0)); //Midi messages are easier to decode in hexa
   //upper 4 bits are event type
   //lower 4 bits are channel #
+  //as we are ignoring channel number for now, we just check the first upper bits
 
   if(bytes[0]=='9'){//note on event
     if((int) message->at(2) != 0){ //if volume > 0
-      std::cout << "Note On " << (int)message->at(1) << std::endl;
+      // std::cout << "Note On " << (int)message->at(1) << std::endl;
       // voices->on((int)message->at(1));
       patch->on((int)message->at(1));
     }
     else{ //if volume == 0, treat note on as a note off
-      std::cout << "Note Off " << (int)message->at(1) << std::endl;
+      // std::cout << "Note Off " << (int)message->at(1) << std::endl;
       // voices->off((int)message->at(1));
       patch->off((int)message->at(1));
     }
   }else if(bytes[0]=='8'){//note off event
-    std::cout << "Note Off " << (int)message->at(1) << std::endl;
+    // std::cout << "Note Off " << (int)message->at(1) << std::endl;
     // voices->off((int)message->at(1));
     patch->off((int)message->at(1));
   }
   else if(bytes[0]=='b'){//cc event
-    std::cout << "CC " << (int)message->at(1) << ", value = " << (int)message->at(2) << std::endl;
+    //message->at(1) is the CC number, message->at(2) is the value of the CC
+    // std::cout << "CC " << (int)message->at(1) << ", value = " << (int)message->at(2) << std::endl;
     patch->cc((int)message->at(1), (int)message->at(2));
   }/*
   if ((int)message->at(0) == 176) {

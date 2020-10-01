@@ -98,6 +98,7 @@ void WaveShape::addWave(Wave* wave)
     if (this->numWaves < MAX_TABLE_NUM + 1) {
         this->waveforms[this->numWaves] = wave->wave;
         ++this->numWaves;
+        // cout <<dline()<<"num waves : "<<this->numWaves<<"\n";s
     }
     else {
         printf("Maximum number of waveforms exceeded");

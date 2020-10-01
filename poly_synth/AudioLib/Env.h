@@ -4,6 +4,12 @@
 #include "../AudioAPI/AudioConstants.h"
 #include <math.h>
 
+#include "../AudioAPI/AudioConstants.h"
+#include "../Utils/SignalUtils.h" //defines initBuffer
+
+class Env;
+#include "AudioOutput.h"
+
 class Env{
     public:
         void setA(float);
@@ -14,8 +20,10 @@ class Env{
         void off();
         bool isActive;
         bool isOn;
-        void output(void*);
         Env();
+
+        AudioOutput* audioOutput=NULL;
+        void output(void*, bool, bool);
 
     private:
         float a, d, s, r;

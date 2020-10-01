@@ -14,6 +14,8 @@ Env::Env(void){
     this->isOn = false;
     this->isActive = false;
 
+    this->audioOutput = new AudioOutput(this);
+
 }
 
 void Env::on(){
@@ -67,8 +69,13 @@ sample_t Env::computeRelease(){
     }
 }
 
-void Env::output(void* outputBuffer){
+void Env::output(void* outputBuffer, bool stereo, bool modification){
     sample_t* out = (sample_t*) outputBuffer;
+    float tmp_elapsed, tmp_lastValue;
+    if(modification){
+        tmp_elapsed = this->elapsed;
+        tmp_lastValue = this->lastValue;
+    }
 
     for(int i=0; i<(FRAMES_PER_BUFFER); i++){
         if(this->isOn){
@@ -92,8 +99,14 @@ void Env::output(void* outputBuffer){
         
     }
     for(int i=0; i<(FRAMES_PER_BUFFER); i++){
-        //Mono output
-        *out++ = env[i];
+        *out++ = env[i]; //Mono/left
+        if (stereo) {
+            *out++ = env[i];  // right
+        }
+    }
+    if(modification){
+        this->elapsed = tmp_elapsed;
+        this->lastValue = tmp_lastValue;
     }
     
 }

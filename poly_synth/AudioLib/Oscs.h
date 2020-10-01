@@ -26,7 +26,7 @@ class Osc{
 		void setWave(char);
 		void output(void*, bool);
 		AudioOutput* audioOutput;
-		int type=1;
+		// int type=1;
 		Osc(float);
 };
 
@@ -41,6 +41,8 @@ class VOsc {
 		WaveShape* waveshape;
 		sample_t wave_output[TABLE_SIZE];
 		void updatePhaseIncrement();
+		bool has_input=false;
+		AudioOutput* input;
 
 	public:
 		VOsc(float);
@@ -53,7 +55,8 @@ class VOsc {
 		void setNote(float);
 		void output(void*, bool);
 		AudioOutput* audioOutput;
-		int type = 1;
+		void setInput(AudioOutput*);
+		// int type = 1;
 	};
 
 #endif

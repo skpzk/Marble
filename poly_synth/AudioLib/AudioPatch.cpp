@@ -5,10 +5,10 @@ AudioPatch::AudioPatch(){
     
     this->voices = new Voices(VOICES); //the Voices class manages polyphony
 
-	//this->voices->setWaveform(3); //0: sine; 1: saw; 2: tri; 3: square
+	// this->voices->setWaveform(3); //0: sine; 1: saw; 2: tri; 3: square
     this->voices->selectWaveShape(0); //0: basic shapes
 	this->voices->setAmplitude(1);
-	this->voices->setADSR(30, 10, 100, 80);
+	this->voices->setADSR(120, 10, 100, 80);
 
 	// this->midi = new Midi(this->voices); //note on/off events are send to the Voices class
     this->midi = new Midi(this); //Midi events are send back to AudioPatch
@@ -19,8 +19,8 @@ AudioPatch::AudioPatch(){
 	this->filter = new BiquadFilter;
 	this->filter->setInput(this->voices->mixer.audioOutput); // filter gets its input from mixer
 
-	this->filter->setFc(330.); //set the cutoff frequency
-	this->filter->setMidiFc(60.); //same with midi note number
+	this->filter->setFc(880.); //set the cutoff frequency
+	this->filter->setMidiFc(93.); //same with midi note number
 	this->filter->setQ(2.); //set the resonance (filter is a resonant low-pass)
 
     this->audio = new Audio;
@@ -53,6 +53,9 @@ void AudioPatch::cc(int ccNumber, int ccValue){
             break;
         case 15:
             this->filter->setMidiQ(ccValue);
+            break;
+        case 16:
+            this->setInterpolation(ccValue / (float)127);
             break;
     }
 }

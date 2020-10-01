@@ -15,10 +15,10 @@ void Vca::output(void* outputBuffer, bool stereo) {
         initBuffer(this->bufInput, FRAMES_PER_BUFFER, 0); //initBuffer defined in Utils/SignalUtils
     }
     if (this->has_env) {
-        this->env->output(this->bufEnv);
+        this->env->writeToBuffer(this->bufEnv, false);
     }
     else {
-        initBuffer(this->bufEnv, FRAMES_PER_BUFFER, 1);
+        initBuffer(this->bufEnv, FRAMES_PER_BUFFER, MAX);
     }
 
     for (int i = 0; i < (FRAMES_PER_BUFFER); i++) { // Vca is MONO !
@@ -37,9 +37,11 @@ void Vca::setInput(AudioOutput* audioOutput) {
     }
 }
 
-void Vca::setEnv(Env* env) {
-    this->env = env;
-    this->has_env = true;
+void Vca::setEnv(AudioOutput* env) {
+    if (!this->has_env) {
+        this->env = env;
+        this->has_env = true;
+    }
 }
 
 void Vca::setVolume(float vol) {

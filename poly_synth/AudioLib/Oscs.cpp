@@ -12,7 +12,7 @@ void Osc::output(void* outputBuffer, bool stereo){
     // printf("Getting data from Osc\n");
     sample_t *out = (sample_t*)outputBuffer;
 
-    for(int i=0; i<FRAMES_PER_BUFFER; i++){ // Osc is MONO !
+    for(int i=0; i<FRAMES_PER_BUFFER; i++){
         *out++ = this->wave.wave[(int)this->phase] * this->volume;  // mono/left
         if(stereo){
 	        	*out++ = this->wave.wave[(int)this->phase] * this->volume;  // right
@@ -84,7 +84,7 @@ void VOsc::interpolate()
     wave_1 = this->waveshape->waveforms[(int)intpart];
     wave_2 = this->waveshape->waveforms[(int)intpart + 1];
 
-    std::cout << intpart << " " << fractpart << std::endl;
+    // std::cout << intpart << " " << fractpart << std::endl;
 
     if (fractpart != 0) {
         for (int i = 0; i < TABLE_SIZE; i++) {
@@ -96,9 +96,22 @@ void VOsc::interpolate()
 void VOsc::output(void* outputBuffer, bool stereo) {
     sample_t* out = (sample_t*)outputBuffer;
 
+    sample_t in[FRAMES_PER_BUFFER];
+
+    if(this->has_input){
+        this->input->writeToBuffer(in, false, true);
+    }else{
+        initBuffer(in, FRAMES_PER_BUFFER, 0);
+    }
+    this->setInterpolation(((float)in[0])/(5. * MAX));
+
     this->interpolate();
 
-    for (int i = 0; i < FRAMES_PER_BUFFER; i++) { // Osc is MONO !
+    for (int i = 0; i < FRAMES_PER_BUFFER; i++) {
+        // this->setInterpolation(((float)in[i])/(5. * MAX));
+
+        // this->interpolate();
+
         *out++ = this->wave_output[(int)this->phase] * this->volume;  // mono/left
         if (stereo) {
             *out++ = this->wave_output[(int)this->phase] * this->volume;  // right
@@ -127,4 +140,11 @@ void VOsc::setVolume(float volume) {
 
 void VOsc::updatePhaseIncrement() {
     this->phaseIncrement = this->freq * TABLE_SIZE / SAMPLE_RATE;
+}
+
+void VOsc::setInput(AudioOutput* audioOutput){
+    if(!this->has_input){
+        this->input = audioOutput;
+        this->has_input = true;
+    }
 }

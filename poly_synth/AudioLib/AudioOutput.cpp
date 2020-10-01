@@ -25,11 +25,23 @@ AudioOutput::AudioOutput(Mixer* mixer){
     this->outputType = mixer_out;
 }
 
+AudioOutput::AudioOutput(Env* env){
+    this->env = env;
+    this->outputType = env_out;
+}
+
 AudioOutput::AudioOutput(){
     this->outputType = nooutput;
 }
 
 void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo){
+    this->writeToBuffer(outputBuffer, stereo, false);
+}
+
+void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo, bool modification){
+    //if the output is for modification purposes, don't modify object parameters
+    //e.g. output the wave of an osc without updating its phase
+    //as of now only implemented in env
     switch(this->outputType){
         case osc_out:
             this->osc->output(outputBuffer, stereo);
@@ -46,6 +58,9 @@ void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo){
             break;
         case vca_out:
             this->vca->output(outputBuffer, stereo);
+            break;
+        case env_out:
+            this->env->output(outputBuffer, stereo, modification);
             break;
         case nooutput:
             printf("No output\n");

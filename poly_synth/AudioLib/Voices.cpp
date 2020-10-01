@@ -99,9 +99,9 @@ void Voices::selectWaveShape(int type) {
 
 void Voices::setInterpolation(float value)
 {
-    for (int i = 0; i < this->total_voices; i++) {
-        this->notes[i]->setInterpolation(value);
-    }
+  for (int i = 0; i < this->total_voices; i++) {
+    this->notes[i]->setInterpolation(value);
+  }
 }
 
 void Voices::setAmplitude(float f){
