@@ -6,18 +6,4 @@ Oscs--
     --                . |
                      --
 */
-
-class AudioObject{
-   public:
-      AudioOutput* audioOutput=NULL;
-      AudioObject();
-
-AudioObject::AudioObject(){
-   this->audioOutput = new AudioOutput(this);
-}
-
-Has AudioOutput:
-- osc    yes
-- Vca    yes
-- Filter yes
-- Mixer  yes
+//NB : only one osc/note

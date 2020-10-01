@@ -54,9 +54,6 @@ void BiquadFilter::output(void* outputBuffer, bool stereo){
     sample_t *out = (sample_t*)outputBuffer;
     float data = 0;
 
-    int maxIn=0;
-    float maxOut=0;
-
 	for(int i=0; i<FRAMES_PER_BUFFER; i++){ 
 
         data = in[i] * this->coefs.b0 
@@ -64,8 +61,6 @@ void BiquadFilter::output(void* outputBuffer, bool stereo){
     	    - this->coefs.a1 * this->state.yn1 - this->coefs.a2 * this->state.yn2;
 
     	this->state.update(in[i], data);
-        if(in[i] > maxIn){maxIn = in[i];}
-        if(data > maxOut){maxOut = data;}
  
         *out++ = (sample_t) data;  // mono/left
         if(stereo){

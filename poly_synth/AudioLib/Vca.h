@@ -2,6 +2,7 @@
 #define vca_h_
 
 #include "../AudioAPI/AudioConstants.h"
+#include "../Utils/SignalUtils.h"
 class Vca;
 #include "Oscs.h"
 #include "Env.h"
@@ -12,13 +13,11 @@ class Vca{
 		float volume = 1;
 		bool has_env=false;
 		bool has_input=false;
-		Osc* osc;
 		Env* env;
 		AudioOutput* input;
 
 		sample_t bufInput[FRAMES_PER_BUFFER];
 		sample_t bufEnv[FRAMES_PER_BUFFER];
-		void init(sample_t*, int);
 	public:
 		void setVolume(float);
 		void output(void*, bool);

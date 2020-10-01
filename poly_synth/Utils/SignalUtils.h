@@ -9,6 +9,7 @@
 
 float trim(float, int, int);
 float trim(float, int);
+void initBuffer(sample_t* buffer, int frames, int value);
  
 
 

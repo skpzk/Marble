@@ -34,11 +34,15 @@ int main(){
 	Audio audio;
 
 	BiquadFilter filter;
-	filter.setInput(voices.mixer.audioOutput);
+	filter.setInput(voices.mixer.audioOutput); // filter gets its input from mixer
+
+	filter.setFc(330.); //set the cutoff frequency
+	filter.setMidiFc(60.); //same with midi note number
+	filter.setQ(2.); //set the resonance (filter is a resonant low-pass)
 
 	audio.setInput(filter.audioOutput); // Now audio class gets a generic AudioOutput as input
 
-	audio.start(); //start should be called after addInput
+	audio.start(); //start should be called after setInput
 
 	while(flagLoop){
 		sleep_for(100ms);
