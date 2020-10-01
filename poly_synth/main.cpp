@@ -7,7 +7,8 @@
 #include "AudioAPI/audio.h"
 #include "AudioLib/Voices.h"
 #include "Utils/wait.h" //used to wait for X time intervals. (sleep_for is defined here)
-#include "Utils/DebugUtils.h"
+
+#include "AudioLib/AudioOutput.h"
 
 using namespace std;
 
@@ -18,9 +19,6 @@ void raiseFlag(int param)
 }
 
 int main(){
-
-	std::cout << dline() << "test dline" << std::endl;
-	printf("%stest with printf\n", dline().c_str());
 
 	signal(SIGINT, raiseFlag);
 
@@ -35,9 +33,12 @@ int main(){
 
 	Audio audio;
 
-	audio.addInputFromMixer(&voices.mixer); // the audio class gets audio data from voices.mixer
+	BiquadFilter filter;
+	filter.setInput(voices.mixer.audioOutput);
 
-	audio.start(); //start should be called after addInputFromMixer
+	audio.setInput(filter.audioOutput); // Now audio class gets a generic AudioOutput as input
+
+	audio.start(); //start should be called after addInput
 
 	while(flagLoop){
 		sleep_for(100ms);

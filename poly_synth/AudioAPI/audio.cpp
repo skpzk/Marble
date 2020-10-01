@@ -6,7 +6,7 @@
 ** It may called at interrupt level on some machines so don't do anything
 ** that could mess up the system like calling malloc() or free().
 */
-int patestCallback( const void *inputBuffer, void *outputBuffer,
+int paCallback( const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
                            const PaStreamCallbackTimeInfo* timeInfo,
                            PaStreamCallbackFlags statusFlags,
@@ -18,9 +18,13 @@ int patestCallback( const void *inputBuffer, void *outputBuffer,
     int finished = 0;
     (void) inputBuffer; /* Prevent unused variable warnings. */
 
-	if(data->mixer != NULL){
-		//if Audio::addInputFromMixer is called before Audio::start, mixer != NULL
-		data->mixer->output(out, framesPerBuffer, true);
+	// if(data->mixer != NULL){
+	// 	//if Audio::addInputFromMixer is called before Audio::start, mixer != NULL
+	// 	data->mixer->output(out, framesPerBuffer, true);
+	// }
+	if(data->output != NULL){
+		//if Audio::addInput is called before Audio::start, output != NULL
+		data->output->writeToBuffer(out, true);
 	}
 
     return finished;
@@ -64,7 +68,7 @@ PaError Audio::startStream(void){
 		                     SAMPLE_RATE,
 		                     FRAMES_PER_BUFFER,       /* Frames per buffer. */
 		                     paClipOff, /* We won't output out of range samples so don't bother clipping them. */
-		                     patestCallback,
+		                     paCallback,
 		                     &this->data);
 		if( this->err != paNoError )
 		    return this->error();
@@ -95,7 +99,7 @@ PaError Audio::stopStream(){
 		return this->err;
 	}
 
-void Audio::addInputFromMixer(Mixer* mixer){
-	this->data.mixer = mixer;
-	printf("Mixer added\n");
+void Audio::setInput(AudioOutput* output){
+	this->data.output = output;
+	printf("Output added to audio\n");
 }

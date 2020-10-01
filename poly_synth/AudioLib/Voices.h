@@ -19,7 +19,7 @@ class Voices {
 
     void printVoices();
 
-    Mixer mixer;
+    Mixer mixer = Mixer();
     
   private:
 

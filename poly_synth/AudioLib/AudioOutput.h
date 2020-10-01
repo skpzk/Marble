@@ -1,0 +1,30 @@
+#ifndef audiooutput_h_
+#define audiooutput_h_
+
+#include "../AudioAPI/AudioConstants.h"
+class AudioOutput;
+#include "Oscs.h"
+#include "Filter.h"
+#include "Vca.h"
+#include "Mixer.h"
+
+enum typeOfOutput{osc_out, mixer_out, filter_out, vca_out, nooutput};
+
+class AudioOutput{
+	public:
+        AudioOutput();
+        AudioOutput(Osc*);
+        AudioOutput(BiquadFilter*);
+        AudioOutput(Vca*);
+        AudioOutput(Mixer*);
+		void writeToBuffer(void*, bool);
+    private:
+        Osc* osc=NULL;
+        BiquadFilter* filter=NULL;
+        Vca* vca=NULL;
+        Mixer* mixer=NULL;
+        typeOfOutput outputType = nooutput;
+        void writeSilence(void*, bool);
+};
+
+#endif

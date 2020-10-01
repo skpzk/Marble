@@ -16,7 +16,7 @@ Voices::Voices(int number){
   }else{
     for(int i = 0; i< this->total_voices ; i++){
       this->notes[i] = new Note();
-      this->mixer.addInput(&this->notes[i]->vca);
+      this->mixer.addInput(this->notes[i]->vca.audioOutput);
     }
   }
 

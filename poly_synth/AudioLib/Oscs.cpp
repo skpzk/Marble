@@ -1,20 +1,21 @@
 #include "Oscs.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
 
 Osc::Osc(float freq){
     this->setFreq(freq);
     this->setVolume(1);
     this->phase = 0.0;
+    this->audioOutput = new AudioOutput(this);
 }
 
-void Osc::output(void* outputBuffer){
+void Osc::output(void* outputBuffer, bool stereo){
     // printf("Getting data from Osc\n");
     sample_t *out = (sample_t*)outputBuffer;
 
     for(int i=0; i<FRAMES_PER_BUFFER; i++){ // Osc is MONO !
-        *out++ = this->wave.wave[(int)this->phase] * this->volume;  // mono
+        *out++ = this->wave.wave[(int)this->phase] * this->volume;  // mono/left
+        if(stereo){
+	        	*out++ = this->wave.wave[(int)this->phase] * this->volume;  // right
+			  }
 
         this->phase += (this->phaseIncrement);
         if( this->phase >= TABLE_SIZE ) this->phase -= TABLE_SIZE;

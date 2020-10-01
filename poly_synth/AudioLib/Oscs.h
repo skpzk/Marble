@@ -2,8 +2,11 @@
 #define oscs_h_
 
 #include "../AudioAPI/AudioConstants.h"
-#include "Wave.h"
 #include "../AudioAPI/MidiUtils.h"
+
+#include "Wave.h"
+class Osc;
+#include "AudioOutput.h"
 
 class Osc{
 	private:
@@ -20,7 +23,8 @@ class Osc{
 		float getNote();
 		void setNote(float);
 		void setWave(char);
-		void output(void*);
+		void output(void*, bool);
+		AudioOutput* audioOutput;
 		int type=1;
 		Osc(float);
 };

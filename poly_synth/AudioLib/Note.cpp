@@ -2,16 +2,13 @@
 
 Note::Note(){
 
-  //this->voices = Voices;
-
   this->osc = new Osc(440.);
 
   this->note = -1;
   this->order = -1;
 
-  this->vca.setOsc(this->osc);
+  this->vca.setInput(this->osc->audioOutput);
   this->vca.setEnv(&this->env);
-
 }
 
 void Note::on(int midinote){

@@ -7,6 +7,7 @@ enable_testing()
 set(SOURCES
     Utils/wait.h
     Utils/DebugUtils.cpp    Utils/DebugUtils.h
+    Utils/SignalUtils.cpp   Utils/SignalUtils.h
     AudioAPI/AudioConstants.h
     AudioAPI/audio.cpp      AudioAPI/audio.h
     AudioAPI/Midi.cpp       AudioAPI/Midi.h
@@ -14,12 +15,14 @@ set(SOURCES
     AudioAPI/MidiUtils.cpp  AudioAPI/MidiUtils.h
     AudioLib/Oscs.cpp               AudioLib/Oscs.h
     AudioLib/Mixer.cpp              AudioLib/Mixer.h
-    AudioLib/AudioCollection.cpp    AudioLib/AudioCollection.h
+#    AudioLib/AudioCollection.cpp    AudioLib/AudioCollection.h
     AudioLib/Wave.cpp               AudioLib/Wave.h
     AudioLib/Vca.cpp                AudioLib/Vca.h
     AudioLib/Voices.cpp             AudioLib/Voices.h
     AudioLib/Note.cpp               AudioLib/Note.h
     AudioLib/Env.cpp                AudioLib/Env.h
+    AudioLib/Filter.cpp             AudioLib/Filter.h
+    AudioLib/AudioOutput.cpp        AudioLib/AudioOutput.h
 )
 
 add_executable(audioAPIforMarble main.cpp 

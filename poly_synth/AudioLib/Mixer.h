@@ -2,18 +2,23 @@
 #define mixer_h_
 
 #include "../AudioAPI/AudioConstants.h"
+
+class Mixer;
 #include "Oscs.h"
-#include "AudioCollection.h"
+#include "Vca.h"
+#include "AudioOutput.h"
 
 class Mixer{
 	public:
-		//void addInput(Osc*);
-		void addInput(Vca*);
-		void output(void*, int, bool);
+		void addInput(AudioOutput*);
+		void output(void*, bool);
 		int test = 17;
+		AudioOutput* audioOutput=NULL;
+		Mixer();
 	private:
 		int numInputs = 0;
-		AudioCollection inputs;
+		AudioOutput* inputs[VOICES];
+		void writeInputsToBuffer(void* outputBuffer, bool Stereo);
 };
 
 #endif

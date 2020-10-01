@@ -6,4 +6,18 @@ Oscs--
     --                . |
                      --
 */
-//for now there is only one osc per note
+
+class AudioObject{
+   public:
+      AudioOutput* audioOutput=NULL;
+      AudioObject();
+
+AudioObject::AudioObject(){
+   this->audioOutput = new AudioOutput(this);
+}
+
+Has AudioOutput:
+- osc    yes
+- Vca    yes
+- Filter yes
+- Mixer  yes

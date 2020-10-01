@@ -8,9 +8,10 @@
 #include "portaudio.h"
 
 #include "../AudioLib/Mixer.h"
+#include "../AudioLib/AudioOutput.h"
 
 typedef struct{
-	Mixer* mixer = NULL;
+	AudioOutput* output=NULL;
 }paData;
 
 int patestCallback( const void *inputBuffer, void *outputBuffer,
@@ -26,7 +27,7 @@ class Audio{
 		int stop();
 
 		paData          data;
-		void addInputFromMixer(Mixer*);
+		void setInput(AudioOutput*);
 	private:
 		PaStream*           stream;
 		PaStreamParameters  outputParameters;
