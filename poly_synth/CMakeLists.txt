@@ -31,6 +31,7 @@ add_executable(audioAPIforMarble main.cpp
                 )
 
 find_package(Threads REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 
 if (WIN32) 
@@ -42,17 +43,20 @@ if (WIN32)
         "C:/Program Files (x86)/portaudio/lib/portaudio_x64.lib"
         "D:/Vagrant/c++/rtmidi/out/install/x64-Debug (default)/lib/rtmidi.lib"
         Threads::Threads
+#        Qt5::Widgets #uncomment to maybe compile qt5 applications
         winmm)
     set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__WINDOWS_MM__)
 endif (WIN32)
 
 if (UNIX)
-    target_link_libraries(audioAPIforMarble  /usr/local/lib/libportaudio.a
-                          Threads::Threads
-                          asound
-                          jack
-                          rt
-                          m)
+    target_link_libraries(audioAPIforMarble  
+        /usr/local/lib/libportaudio.a
+        Threads::Threads
+        asound
+        jack
+        rt
+        m
+        Qt5::Widgets)
 
     set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__LINUX_ALSA__)
 endif (UNIX)

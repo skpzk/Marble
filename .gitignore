@@ -1,5 +1,5 @@
-/poly_synth/build/
-/poly_synth/out/
-/poly_synth/.vscode/
-/poly_synth/.vs/
+/**/build/
+/**/out/
+/**/.vscode/
+/**/.vs/
 /.vs/

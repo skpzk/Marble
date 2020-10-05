@@ -1,13 +1,3 @@
 # marble
 
-Yo ! J'ai ajouté une fonction que j'utilise souvent pour le debug, qui affiche le fichier, la fonction et la ligne qui sont en train d'écrire quelque chose dans le terminal.
-
-usage :
-```
-#include "Utils/DebugUtils.h"
-
-std::cout << dline() << "message" << std::endl;
-// ou bien
-printf("%s message", dline().c_str());
-
-```
+Yo ! Je ne sais pas si tu as déjà compilé avec Qt, donc j'ai ajouté un dossier avec un hello world en qt et la configuration cmake correspondante, qu'il faudra éventuellement adapter à ton installation.
