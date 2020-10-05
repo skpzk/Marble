@@ -23,6 +23,7 @@ set(SOURCES
     AudioLib/Env.cpp                AudioLib/Env.h
     AudioLib/Filter.cpp             AudioLib/Filter.h
     AudioLib/AudioOutput.cpp        AudioLib/AudioOutput.h
+    AudioLib/WaveFolder.cpp         AudioLib/WaveFolder.h
 )
 
 add_executable(audioAPIforMarble main.cpp 

@@ -8,6 +8,7 @@ class AudioPatch;
 
 #include "Voices.h"
 #include "Filter.h"
+#include "WaveFolder.h"
 
 
 class AudioPatch{
@@ -25,6 +26,7 @@ class AudioPatch{
         Audio* audio=NULL;
         Midi* midi=NULL;
         BiquadFilter* filter=NULL;
+        WaveFolder* wfolder=NULL;
 };
 
 #endif

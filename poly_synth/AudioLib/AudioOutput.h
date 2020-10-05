@@ -8,8 +8,10 @@ class AudioOutput;
 #include "Vca.h"
 #include "Mixer.h"
 #include "Env.h"
+#include "WaveFolder.h"
 
-enum typeOfOutput{osc_out, vosc_out, mixer_out, filter_out, vca_out, env_out, nooutput};
+enum typeOfOutput{osc_out, vosc_out, mixer_out, filter_out, 
+                  vca_out, env_out, wavefolder_out,nooutput};
 
 class AudioOutput{
 	public:
@@ -20,6 +22,7 @@ class AudioOutput{
         AudioOutput(Vca*);
         AudioOutput(Mixer*);
         AudioOutput(Env*);
+        AudioOutput(WaveFolder*);
 		void writeToBuffer(void*, bool);
 		void writeToBuffer(void*, bool, bool);
     private:
@@ -29,6 +32,7 @@ class AudioOutput{
         Vca* vca=NULL;
         Mixer* mixer=NULL;
         Env* env=NULL;
+        WaveFolder* waveFolder=NULL;
         typeOfOutput outputType = nooutput;
         void writeSilence(void*, bool);
 };

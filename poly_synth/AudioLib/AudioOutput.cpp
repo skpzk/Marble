@@ -30,6 +30,11 @@ AudioOutput::AudioOutput(Env* env){
     this->outputType = env_out;
 }
 
+AudioOutput::AudioOutput(WaveFolder* waveFolder){
+    this->waveFolder = waveFolder;
+    this->outputType = wavefolder_out;
+}
+
 AudioOutput::AudioOutput(){
     this->outputType = nooutput;
 }
@@ -61,6 +66,9 @@ void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo, bool modificati
             break;
         case env_out:
             this->env->output(outputBuffer, stereo, modification);
+            break;
+        case wavefolder_out:
+            this->waveFolder->output(outputBuffer, stereo);
             break;
         case nooutput:
             printf("No output\n");

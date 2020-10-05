@@ -5,6 +5,7 @@
 #include "Oscs.h"
 #include "Vca.h"
 #include "Env.h"
+#include "WaveFolder.h"
 
 class Note {
   public :
@@ -24,6 +25,8 @@ class Note {
     void selectWaveShape(int);
     void setInterpolation(float);
 
+    void setFoldingLimit(float);
+
     void setWaveform(int);
     void setAmplitude(float);
 
@@ -37,6 +40,7 @@ class Note {
     Osc *osc;
     VOsc* vosc;
     Env env = Env();
+    WaveFolder* wfolder;
 };
 
 #endif

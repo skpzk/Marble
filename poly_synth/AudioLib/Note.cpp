@@ -5,12 +5,16 @@ Note::Note(){
   this->osc = new Osc(440.);
   this->vosc = new VOsc(440.);
 
+  this->wfolder = new WaveFolder;
+
   this->note = -1;
   this->order = -1;
 
-  this->vca.setInput(this->vosc->audioOutput);
+  this->wfolder->setInput(this->vosc->audioOutput);
+
+  this->vca.setInput(this->wfolder->audioOutput);
   this->vca.setEnv(this->env.audioOutput);
-  this->vosc->setInput(this->env.audioOutput);
+  // this->vosc->setInput(this->env.audioOutput);
 }
 
 void Note::on(int midinote){
@@ -55,6 +59,11 @@ void Note::selectWaveShape(int type) {
 void Note::setInterpolation(float value)
 {
     this->vosc->setInterpolation(value);
+}
+
+void Note::setFoldingLimit(float value)
+{
+    this->wfolder->setFoldingLimit(value);
 }
 
 void Note::setADSR(float* adsr){

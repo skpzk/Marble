@@ -104,6 +104,13 @@ void Voices::setInterpolation(float value)
   }
 }
 
+void Voices::setFoldingLimit(float value)
+{
+  for (int i = 0; i < this->total_voices; i++) {
+    this->notes[i]->setFoldingLimit(value);
+  }
+}
+
 void Voices::setAmplitude(float f){
   if((f>=0)&&(f<=2)){
     for(int i=0; i<this->total_voices; i++){

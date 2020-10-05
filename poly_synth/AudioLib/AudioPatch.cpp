@@ -1,5 +1,4 @@
 #include "AudioPatch.h"
-#include "AudioPatch.h"
 
 AudioPatch::AudioPatch(){
     
@@ -16,8 +15,11 @@ AudioPatch::AudioPatch(){
 	this->midi->open(0); //use a negative number to display an interactive port selection
 	//or use directly the port number
 
+    this->wfolder = new WaveFolder;
+    this->wfolder->setInput(this->voices->mixer.audioOutput);
+
 	this->filter = new BiquadFilter;
-	this->filter->setInput(this->voices->mixer.audioOutput); // filter gets its input from mixer
+	this->filter->setInput(this->wfolder->audioOutput); // filter gets its input from mixer
 
 	this->filter->setFc(880.); //set the cutoff frequency
 	this->filter->setMidiFc(93.); //same with midi note number
@@ -55,8 +57,12 @@ void AudioPatch::cc(int ccNumber, int ccValue){
             this->filter->setMidiQ(ccValue);
             break;
         case 16:
+            cout << dline() << "setting interp value\n";
             this->setInterpolation(ccValue / (float)127);
             break;
+        case 17:
+            // cout << dline() << "setting folding limit\n";
+            this->voices->setFoldingLimit(ccValue);
     }
 }
 

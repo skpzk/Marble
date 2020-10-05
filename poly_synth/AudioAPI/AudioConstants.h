@@ -17,4 +17,6 @@ typedef int   sample_t;
 #define TRIANGLE (2)
 #define SQUARE   (3)
 
+#include "../Utils/DebugUtils.h"
+
 #endif

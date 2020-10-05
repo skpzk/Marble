@@ -19,7 +19,7 @@ class AudioObject{
    private:
 		bool has_input=false;
 		AudioOutput* input;
-
+};
 #endif
 
 
@@ -65,7 +65,7 @@ void AudioObject::output(void* outputBuffer, bool stereo){
 #include "AudioObject.h"
 
 //add a new type of output
-enum typeOfOutput{AudioObject_out};
+enum typeOfOutput{audioobject_out};
 
 class AudioOutput{
 	public:
@@ -84,7 +84,7 @@ class AudioOutput{
 //add new constructor
 AudioOutput::AudioOutput(AudioObject* audioObject){
     this->audioObject = audioObject;
-    this->outputType = AudioObject_out;
+    this->outputType = audioobject_out;
 }
 
 //add new case for new outputType

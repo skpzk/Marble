@@ -100,10 +100,11 @@ void VOsc::output(void* outputBuffer, bool stereo) {
 
     if(this->has_input){
         this->input->writeToBuffer(in, false, true);
+        this->setInterpolation(((float)in[0])/(5. * MAX));
     }else{
-        initBuffer(in, FRAMES_PER_BUFFER, 0);
+        initBuffer(in, FRAMES_PER_BUFFER, 0); //not really useful here
     }
-    this->setInterpolation(((float)in[0])/(5. * MAX));
+    
 
     this->interpolate();
 
