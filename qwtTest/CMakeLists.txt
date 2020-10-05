@@ -11,8 +11,11 @@ set(SOURCES
 
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
-include_directories(/usr/include/qwt)
-link_directories(/usr/include/qwt)
+
+if (UNIX)
+    include_directories(/usr/include/qwt)
+    link_directories(/usr/include/qwt)
+endif (UNIX)
 
 add_executable(qwttest main.cpp ${SOURCES})
 
