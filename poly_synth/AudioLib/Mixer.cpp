@@ -4,10 +4,10 @@ Mixer::Mixer() {
 	this->audioOutput = new AudioOutput(this);
 }
 
-void Mixer::output(void* outputBuffer, bool stereo) {
+void Mixer::output(void* outputBuffer, bool stereo, bool mod) {
 	//get sound data
 	if (this->numInputs > 0) {
-		this->writeInputsToBuffer(outputBuffer, stereo);
+		this->writeInputsToBuffer(outputBuffer, stereo, mod);
 	}
 	else {
 		sample_t* out = (sample_t*)outputBuffer;
@@ -43,13 +43,13 @@ void deleteBuffer(sample_t** inputBuffer, int a) {
 	inputBuffer = NULL;
 }
 
-void Mixer::writeInputsToBuffer(void* outputBuffer, bool Stereo) {
+void Mixer::writeInputsToBuffer(void* outputBuffer, bool Stereo, bool mod) {
 
 	sample_t* out = (sample_t*)outputBuffer;
 	sample_t** inputBuffer = allocateBuffer(this->numInputs, FRAMES_PER_BUFFER);
 	int i, j;
 	for (i = 0; i < this->numInputs; i++) {
-		this->inputs[i]->writeToBuffer((void*)inputBuffer[i], false);
+		this->inputs[i]->writeToBuffer((void*)inputBuffer[i], false, mod);
 	}
 	//write sound data to buffer
 	for (i = 0; i < FRAMES_PER_BUFFER; i++) {

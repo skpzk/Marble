@@ -26,13 +26,13 @@ float WaveFolder::computeFold(float data){
     }
 }
 
-void WaveFolder::output(void* outputBuffer, bool stereo){
+void WaveFolder::output(void* outputBuffer, bool stereo, bool mod){
     sample_t *out = (sample_t*)outputBuffer;
 
     sample_t in[FRAMES_PER_BUFFER];
 
     if(this->has_input){
-        this->input->writeToBuffer(in, false);
+        this->input->writeToBuffer(in, false, mod);
     }else{
         initBuffer(in, FRAMES_PER_BUFFER, 0);
     }

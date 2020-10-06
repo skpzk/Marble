@@ -49,26 +49,26 @@ void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo, bool modificati
     //as of now only implemented in env
     switch(this->outputType){
         case osc_out:
-            this->osc->output(outputBuffer, stereo);
+            this->osc->output(outputBuffer, stereo, modification);
             break;
         case vosc_out:
-            this->vosc->output(outputBuffer, stereo);
+            this->vosc->output(outputBuffer, stereo, modification);
             break;
         case filter_out:
-            this->filter->output(outputBuffer, stereo);
+            this->filter->output(outputBuffer, stereo, modification);
             break;
         case mixer_out:
             //printf("get output from Mixer\n");
-            this->mixer->output(outputBuffer, stereo);
+            this->mixer->output(outputBuffer, stereo, modification);
             break;
         case vca_out:
-            this->vca->output(outputBuffer, stereo);
+            this->vca->output(outputBuffer, stereo, modification);
             break;
         case env_out:
             this->env->output(outputBuffer, stereo, modification);
             break;
         case wavefolder_out:
-            this->waveFolder->output(outputBuffer, stereo);
+            this->waveFolder->output(outputBuffer, stereo, modification);
             break;
         case nooutput:
             printf("No output\n");

@@ -20,7 +20,7 @@ private:
 	sample_t bufEnv[FRAMES_PER_BUFFER];
 public:
 	void setVolume(float);
-	void output(void*, bool);
+	void output(void*, bool, bool);
 	AudioOutput* audioOutput;
 	void setInput(AudioOutput*);
 	void setEnv(AudioOutput*);

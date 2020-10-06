@@ -24,7 +24,7 @@ class Osc{
 		float getNote();
 		void setNote(float);
 		void setWave(char);
-		void output(void*, bool);
+		void output(void*, bool, bool);
 		AudioOutput* audioOutput;
 		// int type=1;
 		Osc(float);
@@ -53,7 +53,7 @@ class VOsc {
 		void setFreq(float);
 		float getNote();
 		void setNote(float);
-		void output(void*, bool);
+		void output(void*, bool, bool);
 		AudioOutput* audioOutput;
 		void setInput(AudioOutput*);
 		// int type = 1;

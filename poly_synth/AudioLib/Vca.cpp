@@ -4,18 +4,18 @@ Vca::Vca() {
     this->audioOutput = new AudioOutput(this);
 }
 
-void Vca::output(void* outputBuffer, bool stereo) {
+void Vca::output(void* outputBuffer, bool stereo, bool mod) {
     // printf("Getting data from Osc\n");
     sample_t* out = (sample_t*)outputBuffer;
 
     if (this->has_input) {
-        this->input->writeToBuffer(this->bufInput, false);
+        this->input->writeToBuffer(this->bufInput, false, mod);
     }
     else {
         initBuffer(this->bufInput, FRAMES_PER_BUFFER, 0); //initBuffer defined in Utils/SignalUtils
     }
     if (this->has_env) {
-        this->env->writeToBuffer(this->bufEnv, false);
+        this->env->writeToBuffer(this->bufEnv, false, mod);
     }
     else {
         initBuffer(this->bufEnv, FRAMES_PER_BUFFER, MAX);

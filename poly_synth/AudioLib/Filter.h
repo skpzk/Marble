@@ -23,7 +23,7 @@ class BiquadState{
 
 class BiquadFilter{
     public:
-        void output(void*, bool);
+        void output(void*, bool, bool);
         void setInput(AudioOutput*);
         AudioOutput* input=NULL;
         AudioOutput* audioOutput=NULL;

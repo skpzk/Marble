@@ -11,14 +11,14 @@ class Mixer;
 class Mixer {
 public:
     void addInput(AudioOutput*);
-    void output(void*, bool);
+    void output(void*, bool, bool);
     int test = 17;
     AudioOutput* audioOutput = NULL;
     Mixer();
 private:
     int numInputs = 0;
     AudioOutput* inputs[VOICES];
-    void writeInputsToBuffer(void* outputBuffer, bool Stereo);
+    void writeInputsToBuffer(void* outputBuffer, bool Stereo, bool mod);
 };
 
 #endif

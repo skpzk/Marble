@@ -8,9 +8,15 @@ Osc::Osc(float freq){
     this->audioOutput = new AudioOutput(this);
 }
 
-void Osc::output(void* outputBuffer, bool stereo){
+void Osc::output(void* outputBuffer, bool stereo, bool mod){
     // printf("Getting data from Osc\n");
     sample_t *out = (sample_t*)outputBuffer;
+
+    float tmpPhase;
+
+    if(mod){
+        tmpPhase = this->phase;
+    }
 
     for(int i=0; i<FRAMES_PER_BUFFER; i++){
         *out++ = this->wave.wave[(int)this->phase] * this->volume;  // mono/left
@@ -20,6 +26,9 @@ void Osc::output(void* outputBuffer, bool stereo){
 
         this->phase += (this->phaseIncrement);
         if( this->phase >= TABLE_SIZE ) this->phase -= TABLE_SIZE;
+    }
+    if(mod){
+        this->phase = tmpPhase;
     }
 }
 
@@ -93,10 +102,16 @@ void VOsc::interpolate()
     }
 }
 
-void VOsc::output(void* outputBuffer, bool stereo) {
+void VOsc::output(void* outputBuffer, bool stereo, bool mod) {
     sample_t* out = (sample_t*)outputBuffer;
 
     sample_t in[FRAMES_PER_BUFFER];
+
+    float tmpPhase;
+
+    if(mod){
+        tmpPhase = this->phase;
+    }
 
     if(this->has_input){
         this->input->writeToBuffer(in, false, true);
@@ -119,6 +134,9 @@ void VOsc::output(void* outputBuffer, bool stereo) {
         }
         this->phase += (this->phaseIncrement);
         if (this->phase >= TABLE_SIZE) this->phase -= TABLE_SIZE;
+    }
+    if(mod){
+        this->phase = tmpPhase;
     }
 }
 

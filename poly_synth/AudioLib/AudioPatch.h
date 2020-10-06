@@ -5,6 +5,7 @@
 class AudioPatch;
 #include "../AudioAPI/Midi.h"
 #include "../AudioAPI/audio.h"
+#include "AudioOutput.h"
 
 #include "Voices.h"
 #include "Filter.h"
@@ -21,6 +22,7 @@ class AudioPatch{
         void off(int);
         void cc(int, int);
         void setInterpolation(float);
+        AudioOutput* audioOutput;
     private:
         Voices* voices=NULL;
         Audio* audio=NULL;

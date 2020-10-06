@@ -1,5 +1,6 @@
 #include "AudioPatch.h"
 
+
 AudioPatch::AudioPatch(){
     
     this->voices = new Voices(VOICES); //the Voices class manages polyphony
@@ -25,10 +26,14 @@ AudioPatch::AudioPatch(){
 	this->filter->setMidiFc(93.); //same with midi note number
 	this->filter->setQ(2.); //set the resonance (filter is a resonant low-pass)
 
+    this->audioOutput = this->filter->audioOutput;
+
     this->audio = new Audio;
-	this->audio->setInput(this->filter->audioOutput); // Now audio class gets a generic AudioOutput as input
+	this->audio->setInput(this->audioOutput); // Now audio class gets a generic AudioOutput as input
 
     this->audio->start();
+
+    
 }
 
 void AudioPatch::updateVoicesStatus(){

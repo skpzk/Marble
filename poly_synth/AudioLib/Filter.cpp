@@ -51,13 +51,22 @@ void BiquadFilter::computeCoefs(){
     this->coefs.a2 = (2 - a0) * a0inv;
 }
 
-void BiquadFilter::output(void* outputBuffer, bool stereo){
+void BiquadFilter::output(void* outputBuffer, bool stereo, bool mod){
     sample_t in[FRAMES_PER_BUFFER];
 
-    this->input->writeToBuffer(in, false);
+    this->input->writeToBuffer(in, false, mod);
     
     sample_t *out = (sample_t*)outputBuffer;
     float data = 0;
+
+    BiquadState tmpState;
+
+    if(mod){
+        tmpState.xn1 = this->state.xn1;
+        tmpState.xn2 = this->state.xn2;
+        tmpState.yn1 = this->state.yn1;
+        tmpState.yn2 = this->state.yn2;
+    }
 
 	for(int i=0; i<FRAMES_PER_BUFFER; i++){ 
 
@@ -72,6 +81,13 @@ void BiquadFilter::output(void* outputBuffer, bool stereo){
 			*out++ = (sample_t) data; //right
 		}
 
+    }
+
+    if(mod){
+        this->state.xn1 = tmpState.xn1;
+        this->state.xn2 = tmpState.xn2;
+        this->state.yn1 = tmpState.yn1;
+        this->state.yn2 = tmpState.yn2;
     }
 }
 
