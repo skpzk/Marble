@@ -7,6 +7,7 @@ enable_testing()
 set(SOURCES
     window.cpp  window.h
     plot.cpp    plot.h
+    rtplot.cpp  rtplot.h
     )
 
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)

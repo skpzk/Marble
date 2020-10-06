@@ -4,6 +4,7 @@
 #include "math.h" 
 #include "window.h"
 #include "plot.h"
+#include "rtplot.h"
 
 using namespace::std;
 
@@ -33,6 +34,11 @@ int main(int argc, char **argv)
     plot.setTitle("Plot sine wave");
     plot.plot(X, Y, size);
     plot.show();
+
+    RtPlot rtplot;
+    rtplot.setTitle("RtPlot sine wave");
+    rtplot.plot(X, Y, size);
+    rtplot.show();
 
     return app.exec();
 }
