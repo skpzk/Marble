@@ -6,8 +6,9 @@
 #include "../AudioAPI/AudioConstants.h"
 #include "../Utils/SignalUtils.h"
 #include "../AudioAPI/MidiUtils.h"
-class BiquadFilter;
+// class BiquadFilter;
 #include "AudioOutput.h"
+#include "AudioObject.h"
 
 typedef struct{
 	float b0, b1, b2, a1, a2;
@@ -21,12 +22,12 @@ class BiquadState{
         float xn1=0, xn2=0, yn1=0, yn2=0;
 };
 
-class BiquadFilter{
+class BiquadFilter : public AudioObject{
     public:
         void output(void*, bool, bool);
-        void setInput(AudioOutput*);
-        AudioOutput* input=NULL;
-        AudioOutput* audioOutput=NULL;
+        // void setInput(AudioOutput*);
+        // AudioOutput* input=NULL;
+        // AudioOutput* audioOutput=NULL;
         void setFc(float);
         void setMidiFc(float);
         void setQ(float);
@@ -40,7 +41,7 @@ class BiquadFilter{
         BiquadState state;
         void computeCoefs();
         void updateQ();
-        bool has_input=false;
+        // bool has_input=false;
 };
 
 

@@ -7,10 +7,11 @@
 #include "../AudioAPI/AudioConstants.h"
 #include "../Utils/SignalUtils.h" //defines initBuffer
 
-class Env;
+// class Env;
 #include "AudioOutput.h"
+#include "AudioObject.h"
 
-class Env{
+class Env : public AudioObject{
     public:
         void setA(float);
         void setD(float);
@@ -22,7 +23,7 @@ class Env{
         bool isOn;
         Env();
 
-        AudioOutput* audioOutput=NULL;
+        // AudioOutput* audioOutput=NULL;
         void output(void*, bool, bool);
 
     private:
@@ -35,6 +36,7 @@ class Env{
         sample_t computeAttack();
         sample_t computeDecay();
         sample_t computeRelease();
+        void setInput(AudioOutput*);
 };
 
 #endif

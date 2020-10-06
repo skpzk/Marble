@@ -3,13 +3,19 @@
 
 #include "../AudioAPI/AudioConstants.h"
 #include "../AudioAPI/MidiUtils.h"
+#include "../Utils/SignalUtils.h"
+
+
+
+// class Osc;
+// class VOsc;
 
 #include "Wave.h"
-class Osc;
-class VOsc;
 #include "AudioOutput.h"
+#include "AudioObject.h"
 
-class Osc{
+
+class Osc : public AudioObject{
 	private:
 		float freq;
 		float volume;
@@ -25,13 +31,11 @@ class Osc{
 		void setNote(float);
 		void setWave(char);
 		void output(void*, bool, bool);
-		AudioOutput* audioOutput;
-		// int type=1;
 		Osc(float);
 };
 
 
-class VOsc {
+class VOsc : public AudioObject {
 	private:
 		float freq;
 		float volume;
@@ -41,8 +45,6 @@ class VOsc {
 		WaveShape* waveshape;
 		sample_t wave_output[TABLE_SIZE];
 		void updatePhaseIncrement();
-		bool has_input=false;
-		AudioOutput* input;
 
 	public:
 		VOsc(float);
@@ -54,9 +56,6 @@ class VOsc {
 		float getNote();
 		void setNote(float);
 		void output(void*, bool, bool);
-		AudioOutput* audioOutput;
-		void setInput(AudioOutput*);
-		// int type = 1;
 	};
 
 #endif
