@@ -14,7 +14,7 @@ Note::Note(){
 
   this->vca.setInput(this->wfolder->audioOutput);
   this->vca.setEnv(this->env.audioOutput);
-  // this->vosc->setInput(this->env.audioOutput);
+  this->vosc->setInput(this->env.audioOutput);
 }
 
 void Note::on(int midinote){
@@ -28,6 +28,33 @@ void Note::on(int midinote){
 void Note::off(int midinote){
   this->setAmplitude(0);
   this->env.off();
+}
+
+void Note::set(setterType t, float value){
+  switch(t){
+    case A:
+      this->env.setA(value);
+      break;
+    case D:
+      this->env.setD(value);
+      break;
+    case S:
+      this->env.setS(value);
+      break;
+    case R:
+      this->env.setR(value);
+      break;
+    case waveShape:
+      this->vosc->selectWaveShape(value);
+      break;
+    case interp:
+      this->vosc->setInterpolation(value);
+      break;
+    case fold:
+      this->wfolder->setFoldingLimit(value);
+      break;
+  }
+
 }
 
 void Note::setAmplitude(float a){

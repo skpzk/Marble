@@ -13,7 +13,7 @@ void raiseFlag(int param)
     flagLoop = false;
 }
 
-int main() {
+int main(int argc, char **argv) {
 
 	signal(SIGINT, raiseFlag);
 
@@ -21,9 +21,9 @@ int main() {
 
 	while(flagLoop){
 		sleep_for(100ms);
-		audioPatch.updateVoicesStatus(); //update the order in which notes are played (not the best way to call it, could be called by a note off event)
 	}
 	printf("Loop interrupted\n");
 	audioPatch.stop();
 
+	return 0;
 }

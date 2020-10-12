@@ -7,6 +7,8 @@
 #include "Env.h"
 #include "WaveFolder.h"
 
+enum setterType{A, D, S, R, fc, Q, interp, fold, waveShape};
+
 class Note {
   public :
 
@@ -29,6 +31,8 @@ class Note {
 
     void setWaveform(int);
     void setAmplitude(float);
+
+    void set(setterType, float);
 
     bool isActive();
   

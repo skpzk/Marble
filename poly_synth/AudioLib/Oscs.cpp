@@ -67,7 +67,7 @@ VOsc::VOsc(float freq) {
     this->phase = 0;
     this->waveshape = new WaveShape();
     this->interpFactor = 0;
-    this->selectWaveShape(0);
+    // this->selectWaveShape(0);
     this->audioOutput = new AudioOutput(this);
 }
 
@@ -81,7 +81,14 @@ void VOsc::selectWaveShape(int type) {
 
 void VOsc::setInterpolation(float interpValue)
 {
-    this->interpFactor = interpValue * (this->waveshape->numWaves - 1);
+    this->interpValue = interpValue * (this->waveshape->numWaves - 1);
+    this->interpFactor = this->interpValue;
+}
+
+void VOsc::addInterpolation(float interpValue)
+{
+    this->interpFactor = trim(this->interpValue 
+        + interpValue * (this->waveshape->numWaves - 1), this->waveshape->numWaves - 1);
 }
 
 void VOsc::interpolate()
@@ -111,10 +118,10 @@ void VOsc::output(void* outputBuffer, bool stereo, bool mod) {
     if(mod){
         tmpPhase = this->phase;
     }
-
+    
     if(this->has_input){
-        this->input->writeToBuffer(in, false, true);
-        this->setInterpolation(((float)in[0])/(5. * MAX));
+        this->input->writeToBuffer(in, false, true);   
+        this->addInterpolation(((float)in[0])/(3. * MAX));
     }else{
         initBuffer(in, FRAMES_PER_BUFFER, 0); //not really useful here
     }

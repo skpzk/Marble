@@ -97,17 +97,17 @@ void Voices::selectWaveShape(int type) {
     }
 }
 
-void Voices::setInterpolation(float value)
-{
-  for (int i = 0; i < this->total_voices; i++) {
-    this->notes[i]->setInterpolation(value);
-  }
-}
+// void Voices::setInterpolation(float value)
+// {
+//   for (int i = 0; i < this->total_voices; i++) {
+//     this->notes[i]->setInterpolation(value);
+//   }
+// }
 
-void Voices::setFoldingLimit(float value)
+void Voices::set(setterType t, float value)
 {
   for (int i = 0; i < this->total_voices; i++) {
-    this->notes[i]->setFoldingLimit(value);
+    this->notes[i]->set(t, value);
   }
 }
 

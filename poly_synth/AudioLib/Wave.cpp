@@ -19,6 +19,10 @@ Wave::Wave(int type) {
     case 3: //square wave
         this->square();
         break;
+    
+    case -1: //custom wave
+        initBuffer(wave, FRAMES_PER_BUFFER, 0);
+        break;
     }
 }
 
@@ -82,6 +86,12 @@ void WaveShape::selectWaveShape(int type) {
     case 0:
         this->basicShapes();
         break;
+    case 1:
+        this->organShapes();
+        break;
+    default:
+        this->basicShapes();
+        break;
     }
 }
 
@@ -93,14 +103,36 @@ void WaveShape::basicShapes()
     this->addWave(new Wave(SAW));
 }
 
+void sine(int harm, sample_t* wave){
+    for(int i=0; i<TABLE_SIZE; i++ )
+    {
+        sample_t data=0;
+        for(int h=0; h<harm; h++){
+            data += (sample_t) (MAX / harm * sin( ((double) h * (double)i/(double)TABLE_SIZE) * M_PI * 2.));
+        }
+        wave[i] = data;
+    }
+}
+
+void WaveShape::organShapes()
+{
+    // cout<<dline()<<"organShapesCalled\n";
+    this->addWave(new Wave(SINE));
+    this->addWave(new Wave(-1));
+    sine(2., this->waveforms[this->numWaves-1]);
+    this->addWave(new Wave(-1));
+    sine(3., this->waveforms[this->numWaves-1]);
+    this->addWave(new Wave(-1));
+    sine(4., this->waveforms[this->numWaves-1]);
+}
+
 void WaveShape::addWave(Wave* wave)
 {
     if (this->numWaves < MAX_TABLE_NUM + 1) {
         this->waveforms[this->numWaves] = wave->wave;
         ++this->numWaves;
-        // cout <<dline()<<"num waves : "<<this->numWaves<<"\n";s
     }
     else {
-        printf("Maximum number of waveforms exceeded");
+        printf("Maximum number of waveforms exceeded\n");
     }
 }

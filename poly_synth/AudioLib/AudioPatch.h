@@ -10,12 +10,17 @@ class AudioPatch;
 #include "Voices.h"
 #include "Filter.h"
 #include "WaveFolder.h"
+#include "Note.h" //definition of setter types
 
+struct thread_data {
+   bool loop=true;
+   AudioPatch* patch;
+};
 
 class AudioPatch{
     public:
         AudioPatch();
-        void updateVoicesStatus();
+        static void* updateVoicesStatus(void*);
         void stop();
         //midi methods
         void on(int);
@@ -29,6 +34,8 @@ class AudioPatch{
         Midi* midi=NULL;
         BiquadFilter* filter=NULL;
         WaveFolder* wfolder=NULL;
+        void start();
+        thread_data threadData;
 };
 
 #endif

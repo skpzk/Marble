@@ -7,7 +7,7 @@
 
 
 
-// class Osc;
+// class Osc; //forward declaration is not needed anymore
 // class VOsc;
 
 #include "Wave.h"
@@ -41,7 +41,8 @@ class VOsc : public AudioObject {
 		float volume;
 		float phase;
 		float phaseIncrement;
-		float interpFactor;
+		float interpFactor; // number used to compute the interpolation (interpValue + mod)
+		float interpValue; // set by CC
 		WaveShape* waveshape;
 		sample_t wave_output[TABLE_SIZE];
 		void updatePhaseIncrement();
@@ -51,6 +52,7 @@ class VOsc : public AudioObject {
 		void selectWaveShape(int);
 		void interpolate();
 		void setInterpolation(float);
+		void addInterpolation(float);
 		void setVolume(float);
 		void setFreq(float);
 		float getNote();

@@ -1,14 +1,16 @@
 #include "AudioPatch.h"
-
+#include "pthread.h"
+#include "../Utils/wait.h"
 
 AudioPatch::AudioPatch(){
     
     this->voices = new Voices(VOICES); //the Voices class manages polyphony
 
 	// this->voices->setWaveform(3); //0: sine; 1: saw; 2: tri; 3: square
-    this->voices->selectWaveShape(0); //0: basic shapes
+    // this->voices->selectWaveShape(0); //0: basic shapes
+    this->voices->selectWaveShape(1); //1: organ shapes
 	this->voices->setAmplitude(1);
-	this->voices->setADSR(120, 10, 100, 80);
+	this->voices->setADSR(20, 10, 100, 80);
 
 	// this->midi = new Midi(this->voices); //note on/off events are send to the Voices class
     this->midi = new Midi(this); //Midi events are send back to AudioPatch
@@ -33,14 +35,41 @@ AudioPatch::AudioPatch(){
 
     this->audio->start();
 
+    this->start();
     
 }
 
-void AudioPatch::updateVoicesStatus(){
-    this->voices->update_status();
+void AudioPatch::start(){
+
+    pthread_t threads[1];
+	int rc;
+    
+    this->threadData.loop = true;
+    this->threadData.patch = this;
+
+	cout << "audioPatch() : creating thread."<< endl;
+	rc = pthread_create(&threads[0], NULL, updateVoicesStatus, (void*) &this->threadData);
+	
+	if (rc) {
+		cout << "Error:unable to create thread," << rc << endl;
+		exit(-1);
+	}
+}
+
+void* AudioPatch::updateVoicesStatus(void* p){
+    cout << dline() << "AudioPatch UpdateStatus\n";
+    thread_data* data = (thread_data*) p;
+
+    while(data->loop){
+    	sleep_for(100ms);
+        // cout<<dline()<<"Update status\n";
+    	data->patch->voices->update_status(); //update the order in which notes are played (not the best way to call it, could be called by a note off event)
+    }   
+    pthread_exit(NULL);
 }
 
 void AudioPatch::stop(){
+    this->threadData.loop = false;
     this->midi->close();
 	this->audio->stop();
 }
@@ -62,16 +91,36 @@ void AudioPatch::cc(int ccNumber, int ccValue){
             this->filter->setMidiQ(ccValue);
             break;
         case 16:
-            cout << dline() << "setting interp value\n";
-            this->setInterpolation(ccValue / (float)127);
+            // cout << dline() << "setting interp value\n";
+            // this->setInterpolation(ccValue / (float)127);
+            this->voices->set(interp, ccValue / (float)127);
             break;
         case 17:
             // cout << dline() << "setting folding limit\n";
-            this->voices->setFoldingLimit(ccValue);
+            // this->voices->setFoldingLimit(ccValue);
+            this->voices->set(fold, ccValue);
+            break;
+        case 18:
+            this->voices->set(A, ccValue);
+            // this->voices->setA(ccValue);
+            break;
+        case 19:
+            this->voices->set(D, ccValue);
+            // this->voices->setD(ccValue);
+            break;
+        case 20:
+            this->voices->set(S, ccValue);
+            // this->voices->setS(ccValue);
+            break;
+        case 21:
+            this->voices->set(R, ccValue);
+            // this->voices->setR(ccValue);
+            break;
+
     }
 }
 
-void AudioPatch::setInterpolation(float value)
-{
-    this->voices->setInterpolation(value);
-}
+// void AudioPatch::setInterpolation(float value)
+// {
+//     this->voices->setInterpolation(value);
+// }

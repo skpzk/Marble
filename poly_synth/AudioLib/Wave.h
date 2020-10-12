@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../AudioAPI/AudioConstants.h"
 #include <math.h>
+#include "../Utils/SignalUtils.h"
 
 class Wave{
   public:
@@ -30,6 +31,7 @@ public:
     
 private:
     void basicShapes();
+    void organShapes();
 };
 
 #endif
