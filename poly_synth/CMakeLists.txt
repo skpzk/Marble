@@ -25,6 +25,7 @@ set(SOURCES
     AudioLib/AudioOutput.cpp        AudioLib/AudioOutput.h
     AudioLib/WaveFolder.cpp         AudioLib/WaveFolder.h
     AudioLib/AudioObject.cpp        AudioLib/AudioObject.h
+    Qt/plot.cpp    Qt/plot.h
 )
 
 
@@ -51,14 +52,19 @@ if (WIN32)
 endif (WIN32)
 
 if (UNIX)
+    include_directories(/usr/include/qwt)
+    link_directories(/usr/include/qwt)
     target_link_libraries(audioAPIforMarble  
         /usr/local/lib/libportaudio.a
         Threads::Threads
+        pthread
         asound
         jack
         rt
         m
-        Qt5::Widgets)
+        Qt5::Widgets
+        qwt
+        )
 
     set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__LINUX_ALSA__)
 endif (UNIX)
