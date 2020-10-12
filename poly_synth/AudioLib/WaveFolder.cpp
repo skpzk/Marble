@@ -4,12 +4,13 @@ WaveFolder::WaveFolder(){
    this->audioOutput = new AudioOutput(this);
 }
 
-void WaveFolder::setInput(AudioOutput* audioOutput){
-    if(!this->has_input){
-        this->input = audioOutput;
-        this->has_input = true;
-    }
-}
+// void WaveFolder::setInput(AudioOutput* audioOutput){
+//     if(!this->has_input){
+//         this->input = audioOutput;
+//         this->has_input = true;
+//     }
+// }
+
 //condition to avoid out of range signal :
 //Max - limit < 2 * limit, ie. limit > MAX/3
 void WaveFolder::setFoldingLimit(float limit){

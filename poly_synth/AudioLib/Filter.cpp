@@ -90,10 +90,3 @@ void BiquadFilter::output(void* outputBuffer, bool stereo, bool mod){
         this->state.yn2 = tmpState.yn2;
     }
 }
-
-void BiquadFilter::setInput(AudioOutput* audioOutput){
-    if(!this->has_input){
-        this->input = audioOutput;
-        this->has_input = true;
-    }
-}

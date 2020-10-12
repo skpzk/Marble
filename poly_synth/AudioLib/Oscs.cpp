@@ -67,6 +67,7 @@ VOsc::VOsc(float freq) {
     this->phase = 0;
     this->waveshape = new WaveShape();
     this->interpFactor = 0;
+    this->selectWaveShape(0);
     this->audioOutput = new AudioOutput(this);
 }
 
@@ -157,11 +158,4 @@ void VOsc::setVolume(float volume) {
 
 void VOsc::updatePhaseIncrement() {
     this->phaseIncrement = this->freq * TABLE_SIZE / SAMPLE_RATE;
-}
-
-void VOsc::setInput(AudioOutput* audioOutput){
-    if(!this->has_input){
-        this->input = audioOutput;
-        this->has_input = true;
-    }
 }

@@ -1,38 +1,8 @@
 #include "AudioOutput.h"
 
-AudioOutput::AudioOutput(Osc* osc){
-    this->osc = osc;
-    this->outputType = osc_out;
-}
-
-AudioOutput::AudioOutput(VOsc* vosc) {
-    this->vosc = vosc;
-    this->outputType = vosc_out;
-}
-
-AudioOutput::AudioOutput(BiquadFilter* filter){
-    this->filter = filter;
-    this->outputType = filter_out;
-}
-
-AudioOutput::AudioOutput(Vca* vca){
-    this->vca = vca;
-    this->outputType = vca_out;
-}
-
-AudioOutput::AudioOutput(Mixer* mixer){
-    this->mixer = mixer;
-    this->outputType = mixer_out;
-}
-
-AudioOutput::AudioOutput(Env* env){
-    this->env = env;
-    this->outputType = env_out;
-}
-
-AudioOutput::AudioOutput(WaveFolder* waveFolder){
-    this->waveFolder = waveFolder;
-    this->outputType = wavefolder_out;
+AudioOutput::AudioOutput(AudioObject* audioObject){
+    this->audioObject = audioObject;
+    this->outputType = audioobject_out;
 }
 
 AudioOutput::AudioOutput(){
@@ -48,27 +18,8 @@ void AudioOutput::writeToBuffer(void* outputBuffer, bool stereo, bool modificati
     //e.g. output the wave of an osc without updating its phase
     //as of now only implemented in env
     switch(this->outputType){
-        case osc_out:
-            this->osc->output(outputBuffer, stereo, modification);
-            break;
-        case vosc_out:
-            this->vosc->output(outputBuffer, stereo, modification);
-            break;
-        case filter_out:
-            this->filter->output(outputBuffer, stereo, modification);
-            break;
-        case mixer_out:
-            //printf("get output from Mixer\n");
-            this->mixer->output(outputBuffer, stereo, modification);
-            break;
-        case vca_out:
-            this->vca->output(outputBuffer, stereo, modification);
-            break;
-        case env_out:
-            this->env->output(outputBuffer, stereo, modification);
-            break;
-        case wavefolder_out:
-            this->waveFolder->output(outputBuffer, stereo, modification);
+        case audioobject_out:
+            this->audioObject->output(outputBuffer, stereo, modification);
             break;
         case nooutput:
             printf("No output\n");

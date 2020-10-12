@@ -30,12 +30,12 @@ void Vca::output(void* outputBuffer, bool stereo, bool mod) {
     }
 }
 
-void Vca::setInput(AudioOutput* audioOutput) {
-    if (!this->has_input) {
-        this->input = audioOutput;
-        this->has_input = true;
-    }
-}
+// void Vca::setInput(AudioOutput* audioOutput) {
+//     if (!this->has_input) {
+//         this->input = audioOutput;
+//         this->has_input = true;
+//     }
+// }
 
 void Vca::setEnv(AudioOutput* env) {
     if (!this->has_env) {
