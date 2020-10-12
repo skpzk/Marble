@@ -93,8 +93,6 @@ void VOsc::interpolate()
     wave_1 = this->waveshape->waveforms[(int)intpart];
     wave_2 = this->waveshape->waveforms[(int)intpart + 1];
 
-    // std::cout << intpart << " " << fractpart << std::endl;
-
     if (fractpart != 0) {
         for (int i = 0; i < TABLE_SIZE; i++) {
             this->wave_output[i] = wave_1[i] * (1 - fractpart) + wave_2[i] * fractpart;

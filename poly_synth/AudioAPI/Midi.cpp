@@ -50,13 +50,9 @@ void mycallback( double deltatime, std::vector< unsigned char > *message, void *
     patch->off((int)message->at(1));
   }
   else if(bytes[0]=='b'){//cc event
-    //message->at(1) is the CC number, message->at(2) is the value of the CC
-    // std::cout << "CC " << (int)message->at(1) << ", value = " << (int)message->at(2) << std::endl;
+    std::cout << "CC " << (int)message->at(1) << ", value = " << (int)message->at(2) << std::endl;
     patch->cc((int)message->at(1), (int)message->at(2));
-  }/*
-  if ((int)message->at(0) == 176) {
-      patch->setInterpolation(((float)message->at(2) / (float)127));
-  }*/
+  }
 }
 
 // This function should be embedded in a try/catch block in case of
