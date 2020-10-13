@@ -15,3 +15,4 @@ To be done :
 - option to use different keys for octave +/-
 - option to set interval of the shift kbd
 - works only if launched from build folder, to be improved
+- add cancel calibration button
