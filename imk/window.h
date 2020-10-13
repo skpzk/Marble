@@ -41,6 +41,7 @@ class Window : public QWidget
     private:
         PushButton *cal_sec_button, *cal_main_button;
         PushButton *switch_layout_button;
+        PushButton *cancel_calibration_button;
         bool eventFilter(QObject*, QEvent*);
 
         bool calibrating = false;
@@ -66,6 +67,7 @@ class Window : public QWidget
         void calibrate();
         void endCalibration();
         void switchKbdLayout();
+        void cancelCalibration();
 };
 
 #endif // WINDOW_H

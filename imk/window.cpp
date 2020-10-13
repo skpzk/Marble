@@ -28,8 +28,12 @@ QWidget(parent)
     switch_layout_button = new PushButton("Switch to classic kbd layout", this);
     switch_layout_button->setGeometry(210, 10, 180, 30);
 
+    cancel_calibration_button = new PushButton("Cancel calibration", this);
+    cancel_calibration_button->setGeometry(210, 50, 180, 30);
+
     connect(cal_main_button, SIGNAL (released()), this, SLOT (calibrate()));
     connect(switch_layout_button, SIGNAL (released()), this, SLOT (switchKbdLayout()));
+    connect(cancel_calibration_button, SIGNAL (released()), this, SLOT (cancelCalibration()));
 
 
     //create filter for events
@@ -100,6 +104,18 @@ void Window::endCalibration(){
     }else{
         writeConfigurationToFile(calData);
     }
+}
+
+void Window::cancelCalibration(){
+    calibrating = false;
+    calData->endCalibration();
+    cal_main_button->setText("Calibrate main keyboard");
+    disconnect(cal_main_button, SIGNAL (released()), this, SLOT (endCalibration()));
+    connect(cal_main_button, SIGNAL (released()), this, SLOT (calibrate()));
+    cout << "Cancelling calibration...";
+    getConfigurationFromFile(calData);
+    numberOfRows = calData->getNbRows();
+    cout << "done.\n";
 }
 
 void Window::switchKbdLayout(){
