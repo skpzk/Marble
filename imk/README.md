@@ -14,3 +14,4 @@ To be done :
 - option to change intervals of the isomorphic keyboard
 - option to use different keys for octave +/-
 - option to set interval of the shift kbd
+- works only if launched from build folder, to be improved
