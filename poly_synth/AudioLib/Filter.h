@@ -10,6 +10,8 @@
 #include "AudioOutput.h"
 #include "AudioObject.h"
 
+enum FilterType{lpf, bpf};
+
 typedef struct{
 	float b0, b1, b2, a1, a2;
 }BiquadCoefs;
@@ -25,22 +27,32 @@ class BiquadState{
 class BiquadFilter : public AudioObject{
     public:
         void output(void*, bool, bool);
-        // void setInput(AudioOutput*);
-        // AudioOutput* input=NULL;
-        // AudioOutput* audioOutput=NULL;
+
         void setFc(float);
         void setMidiFc(float);
+
+        // lpf
         void setQ(float);
         void setMidiQ(float);
+
+        // bpf
+        void setBW(float);
+        void setMidiBW(float);
+
+        void setFilterType(FilterType);
         BiquadFilter();
 
     private:
         float fc, maxFc, T;
-        float Q, Qinv;
+        float Q, Qinv, BW;
 		BiquadCoefs coefs;
         BiquadState state;
         void computeCoefs();
-        void updateQ();
+        void computeCoefsLpf();
+        void computeCoefsBpf();
+        void updateQ(); //lpf
+        void updateBW(); //bpf
+        FilterType filterType;
         // bool has_input=false;
 };
 

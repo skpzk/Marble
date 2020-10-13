@@ -1,12 +1,19 @@
 #include "Filter.h"
 
 BiquadFilter::BiquadFilter(){
+    this->filterType = lpf;
     this->maxFc = SAMPLE_RATE/2;
     this->T = 1. / SAMPLE_RATE;
     this->Q = 1.;
+    this->BW = 1.;
 	this->Qinv = 1./this->Q;
     this->setFc(220.);
     this->audioOutput = new AudioOutput(this);
+}
+
+void BiquadFilter::setFilterType(FilterType ft){
+    this->filterType = ft;
+    computeCoefs();
 }
 
 void BiquadState::update(float x, float y){
@@ -34,7 +41,26 @@ void BiquadFilter::setMidiQ(float Q){
     this->setQ(Q * 5./127.);
 }
 
+void BiquadFilter::setBW(float BW){
+	this->BW = trim(BW, .0000001, 3.);
+    this->computeCoefs();
+}
+void BiquadFilter::setMidiBW(float BW){
+    this->setBW(BW * 3./127.);
+}
+
 void BiquadFilter::computeCoefs(){
+    switch(this->filterType){
+        case lpf:
+            this->computeCoefsLpf();
+            break;
+        case bpf:
+            this->computeCoefsBpf();
+            break;
+    }
+}
+
+void BiquadFilter::computeCoefsLpf(){
     float w0 = 2 * M_PI * this->fc * this->T;
     // w0 = omega0 : pulsation
     float a0 = 1 + sin(w0) * 0.5 * this->Qinv;
@@ -49,6 +75,25 @@ void BiquadFilter::computeCoefs(){
 
     this->coefs.a1 = -2 * cosw0 * a0inv;
     this->coefs.a2 = (2 - a0) * a0inv;
+}
+
+void BiquadFilter::computeCoefsBpf(){
+    float w0 = 2 * M_PI * this->fc * this->T;
+    // w0 = omega0 : pulsation
+
+    float alpha = sin(w0) * sinh(log(2.)/2. * this->BW * w0 / sin(w0));
+
+    float cosw0 = cos(w0);
+    float a0 = 1. + alpha;
+
+    // this->coefs.b0 = alpha ; //gain = 0db
+    this->coefs.b0 = sin(w0)/2. ; //gain = Q
+    this->coefs.b1 = 0;
+    // this->coefs.b2 = -1 * alpha; //gain = 0db
+    this->coefs.b2 = -1 * sin(w0)/2.; //gain = Q
+
+    this->coefs.a1 = -2 * cosw0 / a0;
+    this->coefs.a2 = (1 - alpha) / a0;
 }
 
 void BiquadFilter::output(void* outputBuffer, bool stereo, bool mod){
