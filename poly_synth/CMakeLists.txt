@@ -67,6 +67,8 @@ if (UNIX)
         Qt5::Widgets
         qwt
         )
+# maybe this line is better than set(CMAKE_CXX_STANDARD 17)
+#    target_compile_features(audioAPIforMarble PRIVATE cxx_std_17)
 
     set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__LINUX_ALSA__)
 endif (UNIX)
