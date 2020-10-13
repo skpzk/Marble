@@ -65,7 +65,8 @@ VOsc::VOsc(float freq) {
     this->setFreq(freq);
     this->setVolume(1);
     this->phase = 0;
-    this->waveshape = new WaveShape();
+    this->waveshape = &this->commonWaveshape;
+    cout << "waeshape address = " << this->waveshape <<endl;
     this->interpFactor = 0;
     // this->selectWaveShape(0);
     this->audioOutput = new AudioOutput(this);

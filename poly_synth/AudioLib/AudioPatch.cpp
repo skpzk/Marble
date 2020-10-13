@@ -57,7 +57,7 @@ void AudioPatch::start(){
 }
 
 void* AudioPatch::updateVoicesStatus(void* p){
-    cout << dline() << "AudioPatch UpdateStatus\n";
+    // cout << dline() << "AudioPatch UpdateStatus\n";
     thread_data* data = (thread_data*) p;
 
     while(data->loop){

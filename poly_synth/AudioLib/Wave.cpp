@@ -77,6 +77,7 @@ void Wave::saw(){
 
 WaveShape::WaveShape()
 {
+    cout << "declaration of waveshape\n";
     this->numWaves = 0;
     this->waveforms = new sample_t* [MAX_TABLE_NUM];
 }

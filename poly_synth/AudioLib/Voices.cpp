@@ -92,9 +92,7 @@ void Voices::setWaveform(int w){
 }
 
 void Voices::selectWaveShape(int type) {
-    for (int i = 0; i < this->total_voices; i++) {
-        this->notes[i]->selectWaveShape(type);
-    }
+  this->notes[0]->selectWaveShape(type);
 }
 
 // void Voices::setInterpolation(float value)
