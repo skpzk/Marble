@@ -27,28 +27,33 @@ set(SOURCES
     AudioLib/AudioOutput.cpp        AudioLib/AudioOutput.h
     AudioLib/WaveFolder.cpp         AudioLib/WaveFolder.h
     AudioLib/AudioObject.cpp        AudioLib/AudioObject.h
-    Qt/plot.cpp    Qt/plot.h
-)
+    AudioLib/Modulation.cpp       AudioLib/Modulation.h
+    AudioLib/SynthChannel.cpp       AudioLib/SynthChannel.h
+    Qt/plot.cpp                     Qt/plot.h)
 
 
 add_executable(audioAPIforMarble main.cpp 
-                ${SOURCES} 
-                )
+                ${SOURCES})
 
 find_package(Threads REQUIRED)
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 
 if (WIN32) 
+    include_directories("D:\\Qwt-6.1.5\\include")
+    link_directories("D:\\Qwt-6.1.5\\include")
     find_package(portaudio)
     find_package(rtmidi)
     target_include_directories(audioAPIforMarble PUBLIC 
-        "C:/Program Files (x86)/portaudio/include")
+        "C:/Program Files (x86)/portaudio/include"
+        "D:\\pthreads4w")
     target_link_libraries(audioAPIforMarble 
         "C:/Program Files (x86)/portaudio/lib/portaudio_x64.lib"
         "D:/Vagrant/c++/rtmidi/out/install/x64-Debug (default)/lib/rtmidi.lib"
+        "D:\\Qwt-6.1.5\\lib\\qwt.lib"
+        "D:\\pthreads4w\\pthreadVC3.lib"
         Threads::Threads
-#        Qt5::Widgets #uncomment to maybe compile qt5 applications
+        Qt5::Widgets
         winmm)
     set_target_properties(audioAPIforMarble PROPERTIES COMPILE_OPTIONS -D__WINDOWS_MM__)
 endif (WIN32)
