@@ -5,7 +5,11 @@ SynthChannel::SynthChannel() {
     this->modulator = new Modulator(this);
     this->wfolder = new WaveFolder;
     this->wfolder->setInput(this->osc);
-    this->setFinalOutput(this->osc);
+    this->filter = new BiquadFilter;
+    this->filter->setInput(this->wfolder);
+    this->filter->setFc(880.); //set the cutoff frequency
+    this->filter->setQ(2.); //set the resonance (filter is a resonant low-pass)
+    this->setFinalOutput(this->filter);
 }
 
 void SynthChannel::set(setterType t, float value) {
@@ -30,6 +34,12 @@ void SynthChannel::set(setterType t, float value) {
         break;
     case fold:
         this->wfolder->setFoldingLimit(value);
+        break;
+    case filterFc:
+        this->filter->setMidiFc(value);
+        break;
+    case filterQ:
+        this->filter->setMidiQ(value);
         break;
     }
 }

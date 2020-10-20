@@ -3,8 +3,10 @@
 
 #include "../AudioAPI/AudioConstants.h"
 #include "WaveFolder.h"
+#include "Filter.h"
 #include "AudioObject.h"
 #include "Oscs.h"
+
 class SynthChannel;
 #include "Modulator.h"
 
@@ -14,6 +16,7 @@ public:
     Modulator* modulator;
     Osc* osc;
     WaveFolder* wfolder;
+    BiquadFilter* filter;
 
     SynthChannel();
     void selectWaveShape(int);

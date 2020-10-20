@@ -20,7 +20,7 @@ typedef int   sample_t;
 enum modType : unsigned char { envelope, lfo };
 enum modValue : unsigned char { amplitude, interpolation };
 
-enum setterType : unsigned char { A, D, S, R, fc, Q, interp, fold, waveShape };
+enum setterType : unsigned char { A, D, S, R, fc, Q, interp, fold, waveShape, filterFc, filterQ };
 
 #include "../Utils/DebugUtils.h"
 
