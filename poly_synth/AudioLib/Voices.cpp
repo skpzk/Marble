@@ -1,13 +1,12 @@
 
 #include "Voices.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 
 Voices::Voices(int number){
   this->total_voices = number;
-
   this->notes = new Note*[number];
+  this->mixer = new Mixer();
   
   if(notes==NULL){
     for(int i = 0; i< 10 ; i++){
@@ -16,12 +15,10 @@ Voices::Voices(int number){
   }else{
     for(int i = 0; i< this->total_voices ; i++){
       this->notes[i] = new Note();
-      this->mixer.addInput(this->notes[i]->vca.audioOutput);
+      this->mixer->addInput(this->notes[i]->channel->output);
     }
   }
-
   this->voice = -1;
-
 }
 
 void Voices::printVoices(){
@@ -58,65 +55,39 @@ void Voices::off(int note){//on arrête l'enveloppe (qui passe en decay), mais o
   if(this->voice != -1){
     //note off
     notes[this->voice]->off(note);
-    //notes[voice]->note =-1;//si on décommente, update_status ne fonctionne pas
   }
-  //this->printVoices();
 }
 
 void Voices::update_status(){//on détecte les enveloppes inactives, on enlève les notes de la liste et on met à jour l'ordre
-  int n = 0;
-  for(int i = 0; i< this->total_voices ; i++){
-    if(!this->notes[i]->isActive() && this->notes[i]->note != -1){//l'env est inactive mais la note n'est pas supprimée
-      this->notes[i]->note = -1;
-      n = this->notes[i]->order ;
-      this->notes[i]->order = -1;
-      update_order(n);
+    int n = 0;
+    for(int i = 0; i< this->total_voices ; i++){
+        if(!this->notes[i]->isActive() && this->notes[i]->note != -1){//l'env est inactive mais la note n'est pas supprimée
+            this->notes[i]->channel->off();
+            this->notes[i]->note = -1;
+            n = this->notes[i]->order ;
+            this->notes[i]->order = -1;
+            update_order(n);
+        }
     }
-  }
-}
-
-void Voices::setWaveform(int w){
-  /* 0 : WAVEFORM_SINE
-   * 1 : WAVEFORM_SAWTOOTH
-   * 2 : WAVEFORM_TRIANGLE
-   * 3 : WAVEFORM_SQUARE
-   */
-  if((w>=0)&&(w<4)){
-    for(int i=0; i<this->total_voices; i++){
-      this->notes[i]->setWaveform(w);
-    }
-  }
-  else{
-    printf("Wrong waveform type\n");
-  }
 }
 
 void Voices::selectWaveShape(int type) {
-  this->notes[0]->selectWaveShape(type);
+    for (int i = 0; i < this->total_voices; i++) {
+        this->notes[i]->channel->selectWaveShape(type);
+    }
 }
 
-// void Voices::setInterpolation(float value)
-// {
-//   for (int i = 0; i < this->total_voices; i++) {
-//     this->notes[i]->setInterpolation(value);
-//   }
-// }
+void Voices::modulate(modType modType, modValue modValue)
+{
+    for (int i = 0; i < this->total_voices; i++) {
+        this->notes[i]->channel->modulator->modulate(modType, modValue);
+    }
+}
 
 void Voices::set(setterType t, float value)
 {
   for (int i = 0; i < this->total_voices; i++) {
-    this->notes[i]->set(t, value);
-  }
-}
-
-void Voices::setAmplitude(float f){
-  if((f>=0)&&(f<=2)){
-    for(int i=0; i<this->total_voices; i++){
-      this->notes[i]->amp = f;
-    }
-  }
-  else{
-    printf("Wrong amplitude\n");
+    this->notes[i]->channel->set(t, value);
   }
 }
 
@@ -129,7 +100,7 @@ int Voices::setADSR(float a, float d, float s, float r){
     }
   }
   for(int i=0; i<this->total_voices; i++){
-    this->notes[i]->setADSR(adsr);
+    this->notes[i]->channel->modulator->setADSR(adsr);
   }
   return 0;
 }

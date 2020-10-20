@@ -18,13 +18,8 @@ int paCallback( const void *inputBuffer, void *outputBuffer,
     int finished = 0;
     (void) inputBuffer; /* Prevent unused variable warnings. */
 
-	// if(data->mixer != NULL){
-	// 	//if Audio::addInputFromMixer is called before Audio::start, mixer != NULL
-	// 	data->mixer->output(out, framesPerBuffer, true);
-	// }
-	if(data->output != NULL){
-		//if Audio::addInput is called before Audio::start, output != NULL
-		data->output->writeToBuffer(out, true);
+	if (data->audio != NULL) {
+		data->audio->output(out, true, false);
 	}
 
     return finished;
@@ -99,7 +94,7 @@ PaError Audio::stopStream(){
 		return this->err;
 	}
 
-void Audio::setInput(AudioOutput* output){
-	this->data.output = output;
+void Audio::setInput(AudioObject* input){
+	this->data.audio = input;
 	printf("Output added to audio\n");
 }

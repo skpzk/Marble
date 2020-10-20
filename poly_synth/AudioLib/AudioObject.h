@@ -2,21 +2,18 @@
 #define audioobject_h_
 #include <iostream>
 #include "../AudioAPI/AudioConstants.h"
-class AudioObject;
-#include "AudioOutput.h"
-
-
-using namespace::std;
-
 
 class AudioObject{
-   public:
-        AudioOutput* audioOutput=NULL;
-        AudioObject();
-        void setInput(AudioOutput*);
-        virtual void output(void*, bool, bool);
-   protected:
-		bool has_input=false;
-		AudioOutput* input;
+public:
+    bool isOn = false;
+
+    virtual void on();
+    virtual void off();
+    void setInput(AudioObject*);
+    virtual void output(void*, bool, bool);
+
+protected:
+	bool has_input=false;
+    AudioObject* input = NULL;
 };
 #endif

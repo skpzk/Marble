@@ -5,38 +5,32 @@
 AudioPatch::AudioPatch(){
     
     this->voices = new Voices(VOICES); //the Voices class manages polyphony
-
-	// this->voices->setWaveform(3); //0: sine; 1: saw; 2: tri; 3: square
-    // this->voices->selectWaveShape(0); //0: basic shapes
-    this->voices->selectWaveShape(1); //1: organ shapes
-	this->voices->setAmplitude(1);
-	this->voices->setADSR(20, 10, 100, 80);
+    this->voices->selectWaveShape(0); //1: organ shapes
+	this->voices->setADSR(200, 10, 100, 80);
+    this->voices->modulate(envelope, interpolation);
+    //this->voices->modulate(lfo, amplitude);
 
 	// this->midi = new Midi(this->voices); //note on/off events are send to the Voices class
     this->midi = new Midi(this); //Midi events are send back to AudioPatch
-    
 	this->midi->open(0); //use a negative number to display an interactive port selection
 	//or use directly the port number
 
-    this->wfolder = new WaveFolder;
-    this->wfolder->setInput(this->voices->mixer.audioOutput);
+ //   this->wfolder = new WaveFolder;
+ //   this->wfolder->setInput(this->voices->mixer);
 
-	this->filter = new BiquadFilter;
-	this->filter->setInput(this->wfolder->audioOutput); // filter gets its input from mixer
+	//this->filter = new BiquadFilter;
+	//this->filter->setInput(this->wfolder); // filter gets its input from mixer
 
-	this->filter->setFc(880.); //set the cutoff frequency
-	this->filter->setMidiFc(93.); //same with midi note number
-	this->filter->setQ(2.); //set the resonance (filter is a resonant low-pass)
+	//this->filter->setFc(880.); //set the cutoff frequency
+	//this->filter->setMidiFc(93.); //same with midi note number
+	//this->filter->setQ(2.); //set the resonance (filter is a resonant low-pass)
 
-    this->audioOutput = this->filter->audioOutput;
-
+    this->audioOutput = this->voices->mixer;
     this->audio = new Audio;
-	this->audio->setInput(this->audioOutput); // Now audio class gets a generic AudioOutput as input
-
+	this->audio->setInput(this->audioOutput); // Now audio class gets a generic AudioObject as input
     this->audio->start();
 
     this->start();
-    
 }
 
 void AudioPatch::start(){
@@ -66,6 +60,7 @@ void* AudioPatch::updateVoicesStatus(void* p){
     	data->patch->voices->update_status(); //update the order in which notes are played (not the best way to call it, could be called by a note off event)
     }   
     pthread_exit(NULL);
+    return 0;
 }
 
 void AudioPatch::stop(){
@@ -84,12 +79,12 @@ void AudioPatch::off(int note){
 
 void AudioPatch::cc(int ccNumber, int ccValue){
     switch(ccNumber){
-        case 14:
-            this->filter->setMidiFc(ccValue);
-            break;
-        case 15:
-            this->filter->setMidiQ(ccValue);
-            break;
+        //case 14:
+        //    this->filter->setMidiFc(ccValue);
+        //    break;
+        //case 15:
+        //    this->filter->setMidiQ(ccValue);
+        //    break;
         case 16:
             // cout << dline() << "setting interp value\n";
             // this->setInterpolation(ccValue / (float)127);
@@ -101,26 +96,24 @@ void AudioPatch::cc(int ccNumber, int ccValue){
             this->voices->set(fold, ccValue);
             break;
         case 18:
+        case 73:
             this->voices->set(A, ccValue);
             // this->voices->setA(ccValue);
             break;
         case 19:
+        case 75:
             this->voices->set(D, ccValue);
             // this->voices->setD(ccValue);
             break;
         case 20:
+        case 79:
             this->voices->set(S, ccValue);
             // this->voices->setS(ccValue);
             break;
         case 21:
+        case 84:
             this->voices->set(R, ccValue);
             // this->voices->setR(ccValue);
             break;
-
     }
 }
-
-// void AudioPatch::setInterpolation(float value)
-// {
-//     this->voices->setInterpolation(value);
-// }

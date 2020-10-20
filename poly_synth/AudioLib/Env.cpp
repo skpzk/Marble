@@ -5,17 +5,14 @@ Env::Env(void){
     this->setD(0);
     this->setS(127);
     this->setR(100);
-    for(int i=0; i<(FRAMES_PER_BUFFER); i++){
-        this->t[i] = ((float) i) / SAMPLE_RATE;
-    }
     this->timeinterval = 1./SAMPLE_RATE;
     this->lastValue = 0;
-
     this->isOn = false;
     this->isActive = false;
 
-    this->audioOutput = new AudioOutput(this);
-
+    for (int i = 0; i < (FRAMES_PER_BUFFER); i++) {
+        this->t[i] = ((float)i) / SAMPLE_RATE;
+    }
 }
 
 void Env::on(){
@@ -26,7 +23,12 @@ void Env::on(){
 
 void Env::off(){
     this->isOn = false;
-    this->elapsed = 0;
+    if (this->elapsed == 0) {
+        this->isActive = false;
+    }
+    else {
+        this->elapsed = 0;
+    }
 }
 
 void Env::setA(float a){
@@ -104,9 +106,9 @@ void Env::output(void* outputBuffer, bool stereo, bool modification){
             *out++ = env[i];  // right
         }
     }
+
     if(modification){
         this->elapsed = tmp_elapsed;
         this->lastValue = tmp_lastValue;
     }
-    
 }

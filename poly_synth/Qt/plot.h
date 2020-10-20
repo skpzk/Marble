@@ -2,7 +2,7 @@
 #define plot_h_
 
 #include "../AudioAPI/AudioConstants.h"
-#include "../AudioLib/AudioOutput.h"
+#include "../AudioLib/AudioObject.h"
 
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
@@ -22,14 +22,14 @@ class Plot : public QwtPlot{
         void plot(sample_t* Y, int size);
         void getNewData();
 
-        void setInput(AudioOutput*);
+        void setInput(AudioObject*);
         
     protected Q_SLOTS:
         void onTimerEvent(Plot*);
     private:
         int i=0;
         bool has_input=false;
-        AudioOutput* input;
+        AudioObject* input;
         bool eventFilter(QObject*, QEvent*);
         QPolygonF convertTableForPlot(float* tableX, float* tableY, int size);
         QTimer *timer;

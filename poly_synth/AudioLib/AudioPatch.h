@@ -5,7 +5,6 @@
 class AudioPatch;
 #include "../AudioAPI/Midi.h"
 #include "../AudioAPI/audio.h"
-#include "AudioOutput.h"
 
 #include "Voices.h"
 #include "Filter.h"
@@ -26,14 +25,13 @@ class AudioPatch{
         void on(int);
         void off(int);
         void cc(int, int);
-        void setInterpolation(float);
-        AudioOutput* audioOutput;
+        AudioObject* audioOutput;
     private:
         Voices* voices=NULL;
         Audio* audio=NULL;
         Midi* midi=NULL;
-        BiquadFilter* filter=NULL;
-        WaveFolder* wfolder=NULL;
+        //BiquadFilter* filter=NULL;
+        //WaveFolder* wfolder=NULL;
         void start();
         thread_data threadData;
 };

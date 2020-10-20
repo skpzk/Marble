@@ -1,11 +1,8 @@
 # marble
 
-Yo ! Je ne sais pas si tu as déjà compilé avec Qt, donc j'ai ajouté un dossier avec un hello world en qt et la configuration cmake correspondante, qu'il faudra éventuellement adapter à ton installation.
 
-... et un autre dans le même esprit avec un test de Qwt et un example de classe utilisant Qt.
-
-J'ai aussi ajouté une nouvelle classe AudioObject qui simplifie un peu la création de nouveaux objets audio et beaucoup le code d'AudioOutput.  
-Tous les nouveaux objets devraient hériter d'AudioObject.  
-Il n'y a plus besoin de toucher à AudioOutput à chaque création.  
-Chaque nouvel objet doit réécrire une fonction output.  
-Voilà, dis-moi ce que tu en penses !
+Changements:
+- suppression de la class AudioOutput car elle est redondante (l'interface commune est AudioObject)
+- regroupement de toute la logique de synthèse dans un class SynthChannel qui existe dans la note (pas forcément nécessaire mais ça isole la logique de synthèse de celle de l'ordre des notes)
+- plus de Vca mais une interface commune ModScalar pour toute valeur à moduler (pour l'instant amplitude et interpolation)
+- ajout d'un Modulator dans chaque SynthChannel qui regroupe les objets de modulation (lfo, envelope) et les références à toutes les valeurs modulables. On fixe les valeurs de la matrice de modulation dans Voices::modulate qui prend deux valeurs modType et modValue

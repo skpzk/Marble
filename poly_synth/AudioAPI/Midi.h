@@ -8,11 +8,7 @@
 class Midi;
 #include "../AudioLib/AudioPatch.h"
 
-void usage( void );
-
 void mycallback( double deltatime, std::vector< unsigned char > *message, void */*userData*/ );
-
-bool chooseMidiPort( RtMidiIn *rtmidi );
 
 class Midi{
 	public:

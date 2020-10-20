@@ -1,16 +1,5 @@
 #include "WaveFolder.h"
 
-WaveFolder::WaveFolder(){
-   this->audioOutput = new AudioOutput(this);
-}
-
-// void WaveFolder::setInput(AudioOutput* audioOutput){
-//     if(!this->has_input){
-//         this->input = audioOutput;
-//         this->has_input = true;
-//     }
-// }
-
 //condition to avoid out of range signal :
 //Max - limit < 2 * limit, ie. limit > MAX/3
 void WaveFolder::setFoldingLimit(float limit){
@@ -33,7 +22,7 @@ void WaveFolder::output(void* outputBuffer, bool stereo, bool mod){
     sample_t in[FRAMES_PER_BUFFER];
 
     if(this->has_input){
-        this->input->writeToBuffer(in, false, mod);
+        this->input->output(in, false, mod);
     }else{
         initBuffer(in, FRAMES_PER_BUFFER, 0);
     }
@@ -46,6 +35,5 @@ void WaveFolder::output(void* outputBuffer, bool stereo, bool mod){
         if(stereo){
 	        *out++ = data;// right
         }
-        
     }
 }

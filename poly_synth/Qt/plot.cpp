@@ -35,7 +35,7 @@ void Plot::getNewData(){
     // cout << "Getting New Data\n";
 
     if(this->has_input){
-        this->input->writeToBuffer(inBuffer, false, true);
+        this->input->output(inBuffer, false, true);
 
         this->plot(inBuffer, FRAMES_PER_BUFFER);
     }else{
@@ -118,7 +118,7 @@ bool Plot::eventFilter(QObject *object, QEvent *ev)
     }
     return false;
 }
-void Plot::setInput(AudioOutput* audioOutput){
+void Plot::setInput(AudioObject* audioOutput){
     if(!this->has_input){
         this->input = audioOutput;
         this->has_input = true;

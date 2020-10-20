@@ -17,6 +17,11 @@ typedef int   sample_t;
 #define TRIANGLE (2)
 #define SQUARE   (3)
 
+enum modType : unsigned char { envelope, lfo };
+enum modValue : unsigned char { amplitude, interpolation };
+
+enum setterType : unsigned char { A, D, S, R, fc, Q, interp, fold, waveShape };
+
 #include "../Utils/DebugUtils.h"
 
 #endif

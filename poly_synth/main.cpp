@@ -17,17 +17,17 @@ void raiseFlag(int param)
 
 int main(int argc, char **argv) {
 
-	QApplication app( argc, argv );
+	//QApplication app( argc, argv );
 
 	signal(SIGINT, raiseFlag);
 
 	AudioPatch audioPatch;
 
-	Plot plot;
+	/*Plot plot;
 	plot.setTitle("Audio Output");
 	plot.setInput(audioPatch.audioOutput);
 	plot.show();
-	app.exec();
+	app.exec();*/
 
 	while(flagLoop){
 		sleep_for(100ms);

@@ -8,7 +8,6 @@
 #include "../Utils/SignalUtils.h" //defines initBuffer
 
 // class Env;
-#include "AudioOutput.h"
 #include "AudioObject.h"
 
 class Env : public AudioObject{
@@ -20,7 +19,6 @@ class Env : public AudioObject{
         void on();
         void off();
         bool isActive;
-        bool isOn;
         Env();
 
         // AudioOutput* audioOutput=NULL;
@@ -36,7 +34,6 @@ class Env : public AudioObject{
         sample_t computeAttack();
         sample_t computeDecay();
         sample_t computeRelease();
-        void setInput(AudioOutput*);
 };
 
 #endif

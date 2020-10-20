@@ -2,12 +2,11 @@
 #define filter_h_
 
 #include <math.h> 
-
+#define _USE_MATH_DEFINES
 #include "../AudioAPI/AudioConstants.h"
 #include "../Utils/SignalUtils.h"
 #include "../AudioAPI/MidiUtils.h"
 // class BiquadFilter;
-#include "AudioOutput.h"
 #include "AudioObject.h"
 
 enum FilterType{lpf, bpf};

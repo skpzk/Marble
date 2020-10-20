@@ -18,22 +18,20 @@ set(SOURCES
     AudioLib/Oscs.cpp               AudioLib/Oscs.h
     AudioLib/Mixer.cpp              AudioLib/Mixer.h
     AudioLib/AudioPatch.cpp         AudioLib/AudioPatch.h
-    AudioLib/Wave.cpp               AudioLib/Wave.h
-    AudioLib/Vca.cpp                AudioLib/Vca.h
+    AudioLib/Wave.cpp               AudioLib/Wave.h 
     AudioLib/Voices.cpp             AudioLib/Voices.h
     AudioLib/Note.cpp               AudioLib/Note.h
     AudioLib/Env.cpp                AudioLib/Env.h
     AudioLib/Filter.cpp             AudioLib/Filter.h
-    AudioLib/AudioOutput.cpp        AudioLib/AudioOutput.h
     AudioLib/WaveFolder.cpp         AudioLib/WaveFolder.h
     AudioLib/AudioObject.cpp        AudioLib/AudioObject.h
-    AudioLib/Modulation.cpp       AudioLib/Modulation.h
+    AudioLib/Modulator.cpp          AudioLib/Modulator.h
     AudioLib/SynthChannel.cpp       AudioLib/SynthChannel.h
     Qt/plot.cpp                     Qt/plot.h)
 
 
-add_executable(audioAPIforMarble main.cpp 
-                ${SOURCES})
+add_executable(audioAPIforMarble "main.cpp" 
+                ${SOURCES} "AudioLib/ModScalar.h" "AudioLib/ModScalar.cpp")
 
 find_package(Threads REQUIRED)
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)

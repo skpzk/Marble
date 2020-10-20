@@ -8,7 +8,6 @@ BiquadFilter::BiquadFilter(){
     this->BW = 1.;
 	this->Qinv = 1./this->Q;
     this->setFc(220.);
-    this->audioOutput = new AudioOutput(this);
 }
 
 void BiquadFilter::setFilterType(FilterType ft){
@@ -99,7 +98,7 @@ void BiquadFilter::computeCoefsBpf(){
 void BiquadFilter::output(void* outputBuffer, bool stereo, bool mod){
     sample_t in[FRAMES_PER_BUFFER];
 
-    this->input->writeToBuffer(in, false, mod);
+    this->input->output(in, false, mod);
     
     sample_t *out = (sample_t*)outputBuffer;
     float data = 0;
