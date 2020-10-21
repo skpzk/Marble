@@ -26,12 +26,6 @@ void Osc::setInterpolation(float interpValue)
     this->interpFactor = interpValue * (this->waveshape->numWaves - 1);
 }
 
-//void Osc::addInterpolation(float interpValue)
-//{
-//    this->interpFactor = trim(this->interpValue 
-//        + interpValue * (this->waveshape->numWaves - 1), this->waveshape->numWaves - 1);
-//}
-
 void Osc::interpolate()
 {
     float* modulation = this->interpModulation.getValueBuffer();
@@ -64,13 +58,6 @@ void Osc::output(void* outputBuffer, bool stereo, bool mod) {
     if(mod){
         tmpPhase = this->phase;
     }
-    //
-    //if(this->has_input){
-    //    this->input->output(in, false, true);
-    //    this->addInterpolation(((float)in[0])/(3. * MAX));
-    //}else{
-    //    initBuffer(in, FRAMES_PER_BUFFER, 0); //not really useful here
-    //}
     
     this->interpolate();
 

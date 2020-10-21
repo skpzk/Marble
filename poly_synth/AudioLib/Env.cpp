@@ -1,6 +1,6 @@
 #include "Env.h"
 
-Env::Env(void){
+Env::Env(){
     this->setA(50);
     this->setD(0);
     this->setS(127);

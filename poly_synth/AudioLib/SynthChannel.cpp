@@ -7,7 +7,7 @@ SynthChannel::SynthChannel() {
     this->wfolder->setInput(this->osc);
     this->filter = new BiquadFilter;
     this->filter->setInput(this->wfolder);
-    this->filter->setFc(880.); //set the cutoff frequency
+    this->filter->setFc(10000.); //set the cutoff frequency
     this->filter->setQ(2.); //set the resonance (filter is a resonant low-pass)
     this->setFinalOutput(this->filter);
 }

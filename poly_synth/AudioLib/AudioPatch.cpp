@@ -6,9 +6,13 @@ AudioPatch::AudioPatch(){
     
     this->voices = new Voices(VOICES); //the Voices class manages polyphony
     this->voices->selectWaveShape(0); //1: organ shapes
-	this->voices->setADSR(200, 10, 100, 80);
-    this->voices->modulate(lfo, interpolation);
-    this->voices->modulate(envelope, amplitude);
+
+    float adsr[] = { 200, 10, 100, 80 };
+    this->voices->setADSR(ampEnvelope, adsr);
+    this->voices->setADSR(envelope, adsr);
+
+    this->voices->modulate(ampEnvelope, amplitude);
+    this->voices->modulate(envelope, interpolation);
 
     this->midi = new Midi(this); //Midi events are send back to AudioPatch
 	this->midi->open(0); //use a negative number to display an interactive port selection

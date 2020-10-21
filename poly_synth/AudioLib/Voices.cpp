@@ -91,8 +91,7 @@ void Voices::set(setterType t, float value)
   }
 }
 
-int Voices::setADSR(float a, float d, float s, float r){
-  float adsr[] = {a, d, s, r};
+int Voices::setADSR(modType envelope, float* adsr){
   for(int i=0; i<4; i++){
     if(adsr[i] < 0 || adsr[i] > 127){
       printf("Env parameters out of range\n");
@@ -100,7 +99,7 @@ int Voices::setADSR(float a, float d, float s, float r){
     }
   }
   for(int i=0; i<this->total_voices; i++){
-    this->notes[i]->channel->modulator->setADSR(adsr);
+    this->notes[i]->channel->modulator->setADSR(envelope, adsr);
   }
   return 0;
 }

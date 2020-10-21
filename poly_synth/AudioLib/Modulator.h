@@ -11,6 +11,7 @@ class Modulator;
 class Modulator {
 public:
 	// Modulating devices
+	Env* ampEnv;
 	Env* env;
 	Osc* lfOsc;
 	ModScalar* amp;
@@ -18,13 +19,13 @@ public:
 
 	Modulator(SynthChannel*);
 	void modulate(modType, modValue);
-	void setADSR(float* adsr);
+	void setADSR(modType, float*);
 	void on();
 	void off();
 	bool isActive();
-	void set();
 
 private:
+	void applyAmpEnv(modValue);
 	void applyEnv(modValue);
 	void applyLfo(modValue);
 };

@@ -15,7 +15,7 @@ class Voices {
     void update_status();
     void selectWaveShape(int);
     void modulate(modType, modValue);
-    int setADSR(float, float, float, float);
+    int setADSR(modType, float*);
     void set(setterType, float);
     void printVoices();
     
