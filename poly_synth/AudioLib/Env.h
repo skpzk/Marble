@@ -23,7 +23,6 @@ class Env : public AudioObject{
         void output(void*, bool, bool);
 
     private:
-        bool isAmpEnv;
         float a, d, s, r;
         float elapsed, timeinterval;
         sample_t t[FRAMES_PER_BUFFER];

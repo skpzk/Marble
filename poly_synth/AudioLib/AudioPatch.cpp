@@ -12,7 +12,7 @@ AudioPatch::AudioPatch(){
     this->voices->setADSR(envelope, adsr);
 
     this->voices->modulate(ampEnvelope, amplitude);
-    this->voices->modulate(envelope, interpolation);
+    this->voices->modulate(lfo, interpolation);
 
     this->midi = new Midi(this); //Midi events are send back to AudioPatch
 	this->midi->open(0); //use a negative number to display an interactive port selection

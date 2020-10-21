@@ -30,8 +30,6 @@ class AudioPatch{
         Voices* voices=NULL;
         Audio* audio=NULL;
         Midi* midi=NULL;
-        //BiquadFilter* filter=NULL;
-        //WaveFolder* wfolder=NULL;
         void start();
         thread_data threadData;
 };
