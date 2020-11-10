@@ -13,4 +13,6 @@ private:
 	float value;
 	AudioObject* modulator;
 	bool modulated;
+
+	float buffer[FRAMES_PER_BUFFER];
 };

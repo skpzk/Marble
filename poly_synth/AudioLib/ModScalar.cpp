@@ -1,8 +1,12 @@
 #include "ModScalar.h"
 
+#include <iostream>
+using namespace::std;
+
 ModScalar::ModScalar()
 {
-	this->value = NULL;
+	this->value = 0;
+	// cout << "value = " << value << endl;
 	this->modulator = NULL;
 	this->modulated = false;
 }
@@ -30,7 +34,7 @@ float ModScalar::getValue()
 
 float* ModScalar::getValueBuffer()
 {
-	float buffer[FRAMES_PER_BUFFER];
+	// float buffer[FRAMES_PER_BUFFER]; //buffer is declared in class synopsis
 	sample_t mod_values[FRAMES_PER_BUFFER];
 
 	if (this->modulated) {
