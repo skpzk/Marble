@@ -6,6 +6,7 @@
 #include "MidiApi/Midi.h"
 #include "Gui/state.h"
 #include "AudioLib/osc.h"
+#include "AudioLib/env.h"
 
 using namespace::std;
 
@@ -59,6 +60,7 @@ int main(int argc, char **argv)
     cout << "Value of t is : "<< t << endl;
 
     Osc osc;
+    Env env;
     
 
     Window window;

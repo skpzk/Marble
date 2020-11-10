@@ -11,5 +11,4 @@ class Osc{
         Osc();
         void setMidiFreq(float);
         void setMidiInterp(float);
-        static void setStaticThing(float);
 };

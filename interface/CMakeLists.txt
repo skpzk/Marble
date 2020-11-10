@@ -18,7 +18,9 @@ add_executable(interface main.cpp
     MidiApi/Midi.cpp    MidiApi/Midi.h
     MidiApi/RtMidi.h    MidiApi/RtMidi.cpp
     Utils/fileio.h      Utils/fileio.cpp
-    AudioLib/osc.h               AudioLib/osc.cpp)
+    AudioLib/osc.h               AudioLib/osc.cpp
+    AudioLib/env.h               AudioLib/env.cpp   
+    )
 
 
 if (WIN32) 
